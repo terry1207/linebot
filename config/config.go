@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
 var (
@@ -14,7 +15,7 @@ func init() {
 }
 
 func LoadServer() {
-	HttpPort = ":3000"
+	HttpPort = os.Getenv("PORT")
 	if HttpPort == "" {
 		log.Fatal("$PORT must be set")
 	} else {
