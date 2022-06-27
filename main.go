@@ -15,5 +15,5 @@ func main() {
 
 	ginroute := route.InitRouter()
 
-	ginroute.Run(config.HttpPort)
+	ginroute.Run(":" + config.HttpPort)
 }
