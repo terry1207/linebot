@@ -17,8 +17,8 @@ func InitRouter() *gin.Engine {
 	// router.GET("/", func(c *gin.Context) {
 	// 	c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	// })
-	//router.GET("/repeat", v1.RepeatHandler)
-	//router.GET("/db", v1.DbTest)
+	router.GET("/repeat", v1.RepeatHandler)
+	router.GET("/db", v1.DbTest)
 	router.Any("/callback", v1.ReplyMessage)
 
 	// This is just sample code.
