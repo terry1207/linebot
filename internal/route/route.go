@@ -10,14 +10,14 @@ func InitRouter() *gin.Engine {
 	//front.Init()
 
 	router := gin.New()
-	router.Use(gin.Logger())
-	// router.LoadHTMLGlob("templates/*.tmpl.html")
+	// router.Use(gin.Logger())
+	// router.LoadHTMLGlob("web/templates/*.tmpl.html")
 	// router.Static("/static", "static")
 
 	// router.GET("/", func(c *gin.Context) {
 	// 	c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	// })
-	router.GET("/repeat", v1.RepeatHandler)
+	//router.GET("/repeat", v1.RepeatHandler)
 	router.GET("/db", v1.DbTest)
 	router.Any("/callback", v1.ReplyMessage)
 
