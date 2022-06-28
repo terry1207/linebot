@@ -3,22 +3,22 @@ package richmenu
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
-var (
-	CHANNEL_SECRET = "5888804cf864224c0039290df79bbef0"
-	CHANNEL_TOKEN  = "tNraN7tLdbZPoW/GE79Blv7ivJ10n2xlyrMvGvtk4DHrf9Jyb/lJV9ZSelL+PIq5qGjsHVxKr3UyFLmQUXeVvpPZ2BqByxB8XoTNGQCBsCW0vLjFfoFULsOhQRh64sPK7wnggWgRtiKZ/M5bKgRagwdB04t89/1O/w1cDnyilFU="
-)
+// var (
+// 	CHANNEL_SECRET = "5888804cf864224c0039290df79bbef0"
+// 	CHANNEL_TOKEN  = "tNraN7tLdbZPoW/GE79Blv7ivJ10n2xlyrMvGvtk4DHrf9Jyb/lJV9ZSelL+PIq5qGjsHVxKr3UyFLmQUXeVvpPZ2BqByxB8XoTNGQCBsCW0vLjFfoFULsOhQRh64sPK7wnggWgRtiKZ/M5bKgRagwdB04t89/1O/w1cDnyilFU="
+// )
 
 func Build_RichMenu() {
 
 	bot, err := linebot.New(
-		CHANNEL_SECRET, CHANNEL_TOKEN,
 
-		// os.Getenv("CHANNEL_SECRET"),
-		// os.Getenv("CHANNEL_TOKEN"),
+		os.Getenv("CHANNEL_SECRET"),
+		os.Getenv("CHANNEL_TOKEN"),
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -37,13 +37,13 @@ func Build_RichMenu() {
 
 	Richmenu_Id_A := CreatRichMenu_A(bot, aid_B)
 
-	img_path_A := "./src/richmenu/img/img_A.png"
+	img_path_A := "./internal/richmenu/img/img_A.png"
 
 	Upload_Img(bot, Richmenu_Id_A, img_path_A)
 
 	Richmenu_Id_B := CreatRichMenu_B(bot, aid_A)
 
-	img_path_B := "./src/richmenu/img/img_B.png"
+	img_path_B := "./internal/richmenu/img/img_B.png"
 
 	Upload_Img(bot, Richmenu_Id_B, img_path_B)
 
