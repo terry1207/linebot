@@ -77,9 +77,9 @@ func CreatRichMenu_A(bot *linebot.Client, aid string) string {
 			{
 				Bounds: linebot.RichMenuBounds{X: 0, Y: 788, Width: 833, Height: 553},
 				Action: linebot.RichMenuAction{
-					Type: linebot.RichMenuActionTypePostback,
+					Type: linebot.RichMenuActionTypeMessage,
 					Data: "input=123",
-					Text: "好友專屬優惠",
+					//Text: "好友專屬優惠",
 				},
 			},
 
