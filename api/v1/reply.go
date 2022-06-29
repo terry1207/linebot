@@ -119,7 +119,6 @@ func ReplyMessage(c *gin.Context) {
 					}
 
 				default:
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("test"))
 					switch text_trimspace {
 
 					case "查詢降雨機率":
@@ -145,6 +144,13 @@ func ReplyMessage(c *gin.Context) {
 									Action: &linebot.MessageAction{
 										Label: "查詢降雨機率",
 										Text:  "查詢降雨機率",
+									},
+								},
+								{
+									Action: &linebot.PostbackAction{
+										Label: "Post",
+										Data:  "input=123",
+										Text:  c.Query("input"),
 									},
 								},
 							},
