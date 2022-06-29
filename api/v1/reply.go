@@ -146,6 +146,13 @@ func ReplyMessage(c *gin.Context) {
 										Text:  "查詢降雨機率",
 									},
 								},
+								{
+									Action: &linebot.PostbackAction{
+										Label: "post",
+										Data:  "input=123",
+										Text:  c.Query("input"),
+									},
+								},
 							},
 						})).Do()
 
