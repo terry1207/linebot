@@ -22,6 +22,7 @@ func InitRouter() *gin.Engine {
 	})
 	router.GET("/repeat", v1.RepeatHandler)
 	router.GET("/db", v1.DbTest)
+
 	lineroute := router.Group("/callback")
 	lineroute.Any("/", v1.ReplyMessage)
 
