@@ -34,6 +34,8 @@ func DbTest(c *gin.Context) {
 
 func ReplyMessage(c *gin.Context) {
 
+	fmt.Println("test post", c.Query("action"))
+
 	bot, err := linebot.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
@@ -137,6 +139,33 @@ func ReplyMessage(c *gin.Context) {
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Source.RoomID:"+event.Source.RoomID)).Do()
 					case "u":
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Source.UserID:"+event.Source.UserID)).Do()
+					case "p":
+						bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("this is a button template", &linebot.ButtonsTemplate{
+							ThumbnailImageURL:    "https://example.com/bot/images/image.jpg",
+							ImageAspectRatio:     "rectangle",
+							ImageSize:            "cover",
+							ImageBackgroundColor: "#FFFFFF",
+							Title:                "Menu",
+							Text:                 "Please select",
+							DefaultAction: &linebot.URIAction{
+								Label: "View detail",
+								URI:   "http://example.com/page/123",
+							},
+							Actions: []linebot.TemplateAction{
+								&linebot.PostbackAction{
+									Label: "Buy",
+									Data:  "action=buy&itemid=123",
+								},
+								&linebot.PostbackAction{
+									Label: "Add to cart",
+									Data:  "action=add&itemid=123",
+								},
+								&linebot.URIAction{
+									Label: "View detail",
+									URI:   "http://example.com/page/123",
+								},
+							},
+						})).Do()
 					default:
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("請問要查詢什麼？").WithQuickReplies(&linebot.QuickReplyItems{
 							Items: []*linebot.QuickReplyButton{
