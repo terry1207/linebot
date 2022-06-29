@@ -63,6 +63,8 @@ func dbFunc(db *sql.DB) gin.HandlerFunc {
 func replyMessage(bot *linebot.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
+		fmt.Println("get query", c.Query("input"))
+
 		events, err := bot.ParseRequest(c.Request)
 		if err != nil {
 			if err == linebot.ErrInvalidSignature {

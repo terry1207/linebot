@@ -22,7 +22,8 @@ func InitRouter() *gin.Engine {
 	})
 	router.GET("/repeat", v1.RepeatHandler)
 	router.GET("/db", v1.DbTest)
-	router.Any("/callback", v1.ReplyMessage)
+	lineroute := router.Group("/callback")
+	lineroute.Any("/", v1.ReplyMessage)
 
 	// This is just sample code.
 	// For actual use, you must support HTTPS by using `ListenAndServeTLS`, a reverse proxy or something else.
