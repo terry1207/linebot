@@ -209,10 +209,9 @@ func ReplyMessage(c *gin.Context) {
 				}
 			}
 		} else if event.Type == linebot.EventTypePostback {
-			data := *linebot.Event{}.Postback
+			fmt.Println(event.Postback.Data)
 
-			fmt.Println(data.Data)
-
+			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(event.Postback.Data))
 		}
 
 	}
