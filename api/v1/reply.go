@@ -61,10 +61,6 @@ func ReplyMessage(c *gin.Context) {
 
 	for _, event := range events {
 
-		if event.Postback.Data != "" {
-			fmt.Println(event.Postback.Data)
-		}
-
 		var id string
 		switch {
 		case event.Source.UserID != "":
@@ -212,6 +208,9 @@ func ReplyMessage(c *gin.Context) {
 
 				}
 			}
+		} else if event.Type == linebot.EventTypePostback {
+			fmt.Println("data:", event.Postback.Data)
+
 		}
 
 	}
