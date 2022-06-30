@@ -32,6 +32,8 @@ func DbTest(c *gin.Context) {
 	repository.InsertTest()
 }
 
+var post bool
+
 func ReplyMessage(c *gin.Context) {
 
 	fmt.Println("test post", c.Query("action"))
@@ -142,7 +144,7 @@ func ReplyMessage(c *gin.Context) {
 					case "u":
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Source.UserID:"+event.Source.UserID)).Do()
 					case "p":
-						fmt.Println("data", event.Postback)
+
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("this is a button template", &linebot.ButtonsTemplate{
 							ThumbnailImageURL:    "https://example.com/bot/images/image.jpg",
 							ImageAspectRatio:     "rectangle",
@@ -158,11 +160,11 @@ func ReplyMessage(c *gin.Context) {
 								&linebot.PostbackAction{
 									Label: "Buy",
 									Data:  "action=buy&itemid=123",
-									Text:  "收到囉",
+									Text:  event.Postback.Data,
 								},
-								&linebot.PostbackAction{
-									Label: "Add to cart",
-									Data:  "action=add&itemid=123",
+								&linebot.DatetimePickerAction{
+									Label: "選擇時間日期",
+									Data:  "button=1",
 								},
 								&linebot.URIAction{
 									Label: "View detail",
