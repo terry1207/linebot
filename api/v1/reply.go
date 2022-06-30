@@ -162,18 +162,25 @@ func ReplyMessage(c *gin.Context) {
 									Data:  "action=buy&itemid=123",
 									Text:  "收到囉",
 								},
-								&linebot.DatetimePickerAction{
-									Label: "選擇時間日期",
-									Data:  "button=1",
-								},
+
 								&linebot.URIAction{
 									Label: "View detail",
 									URI:   "http://example.com/page/123",
 								},
 							},
 						})).Do()
+					case "d":
+						bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("time", &linebot.ButtonsTemplate{
+							Title: "Menu",
+							Text:  "Please select",
+							DefaultAction: &linebot.DatetimePickerAction{
+								Mode: "date",
+								Data: "type=1",
+							},
+						},
+						)).Do()
 					case "收到囉":
-						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(event.Postback.Data))
+						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(event.Postback.Data)).Do()
 					default:
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("請問要查詢什麼？").WithQuickReplies(&linebot.QuickReplyItems{
 							Items: []*linebot.QuickReplyButton{
