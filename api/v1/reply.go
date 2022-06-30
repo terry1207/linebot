@@ -43,7 +43,8 @@ func ReplyMessage(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(c.Request.RequestURI)
+
+	fmt.Println(c.Request)
 	events, err := bot.ParseRequest(c.Request)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
@@ -53,6 +54,7 @@ func ReplyMessage(c *gin.Context) {
 		}
 		return
 	}
+	fmt.Println(events)
 
 	for _, event := range events {
 		var id string
