@@ -44,7 +44,6 @@ func ReplyMessage(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	fmt.Println(c.Request)
 	events, err := bot.ParseRequest(c.Request)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
@@ -54,9 +53,11 @@ func ReplyMessage(c *gin.Context) {
 		}
 		return
 	}
-	fmt.Println(events)
 
 	for _, event := range events {
+
+		fmt.Println("data", event.Postback.Data)
+
 		var id string
 		switch {
 		case event.Source.UserID != "":
@@ -158,6 +159,7 @@ func ReplyMessage(c *gin.Context) {
 								&linebot.PostbackAction{
 									Label: "Buy",
 									Data:  "action=buy&itemid=123",
+									Text:  "收到囉",
 								},
 								&linebot.PostbackAction{
 									Label: "Add to cart",
@@ -176,13 +178,6 @@ func ReplyMessage(c *gin.Context) {
 									Action: &linebot.MessageAction{
 										Label: "查詢降雨機率",
 										Text:  "查詢降雨機率",
-									},
-								},
-								{
-									Action: &linebot.PostbackAction{
-										Label: "Post",
-										Data:  "input=123",
-										Text:  c.Query("input"),
 									},
 								},
 							},
