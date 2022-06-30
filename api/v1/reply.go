@@ -160,7 +160,7 @@ func ReplyMessage(c *gin.Context) {
 								&linebot.PostbackAction{
 									Label: "Buy",
 									Data:  "action=buy&itemid=123",
-									Text:  "收到囉",
+									Text:  event.Postback.Data,
 								},
 
 								&linebot.URIAction{
@@ -174,8 +174,16 @@ func ReplyMessage(c *gin.Context) {
 							Title: "Menu",
 							Text:  "Please select",
 							DefaultAction: &linebot.DatetimePickerAction{
-								Mode: "date",
-								Data: "type=1",
+								Label: "選擇時間",
+								Mode:  "date",
+								Data:  "type=1",
+							},
+							Actions: []linebot.TemplateAction{
+								&linebot.DatetimePickerAction{
+									Label: "選擇時間",
+									Mode:  "date",
+									Data:  "type=1",
+								},
 							},
 						},
 						)).Do()
