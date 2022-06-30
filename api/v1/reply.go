@@ -33,20 +33,23 @@ func DbTest(c *gin.Context) {
 }
 
 var post bool
+var bot *linebot.Client
+var err error
 
-func ReplyMessage(c *gin.Context) {
-
-	fmt.Println("test post", c.Query("action"))
-
-	bot, err := linebot.New(
+func init() {
+	bot, err = linebot.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func ReplyMessage(c *gin.Context) {
 
 	events, err := bot.ParseRequest(c.Request)
+
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
 			c.Writer.WriteHeader(400)
@@ -57,6 +60,10 @@ func ReplyMessage(c *gin.Context) {
 	}
 
 	for _, event := range events {
+
+		if event.Postback.Data != "" {
+			fmt.Println(event.Postback.Data)
+		}
 
 		var id string
 		switch {
@@ -160,7 +167,7 @@ func ReplyMessage(c *gin.Context) {
 								&linebot.PostbackAction{
 									Label: "Buy",
 									Data:  "action=buy&itemid=123",
-									Text:  event.Postback.Data,
+									Text:  "收到囉",
 								},
 
 								&linebot.URIAction{
