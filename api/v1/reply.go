@@ -142,7 +142,7 @@ func ReplyMessage(c *gin.Context) {
 					case "u":
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Source.UserID:"+event.Source.UserID)).Do()
 					case "p":
-						fmt.Println("data", event.Postback.Data)
+						fmt.Println("data", event.Postback)
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("this is a button template", &linebot.ButtonsTemplate{
 							ThumbnailImageURL:    "https://example.com/bot/images/image.jpg",
 							ImageAspectRatio:     "rectangle",
