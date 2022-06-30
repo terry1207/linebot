@@ -160,7 +160,7 @@ func ReplyMessage(c *gin.Context) {
 								&linebot.PostbackAction{
 									Label: "Buy",
 									Data:  "action=buy&itemid=123",
-									Text:  event.Postback.Data,
+									Text:  "收到囉",
 								},
 								&linebot.DatetimePickerAction{
 									Label: "選擇時間日期",
@@ -172,6 +172,8 @@ func ReplyMessage(c *gin.Context) {
 								},
 							},
 						})).Do()
+					case "收到囉":
+						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(event.Postback.Data))
 					default:
 						bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("請問要查詢什麼？").WithQuickReplies(&linebot.QuickReplyItems{
 							Items: []*linebot.QuickReplyButton{
