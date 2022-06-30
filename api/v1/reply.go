@@ -43,6 +43,7 @@ func ReplyMessage(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(c.Request.RequestURI)
 	events, err := bot.ParseRequest(c.Request)
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
