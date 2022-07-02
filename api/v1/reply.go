@@ -1,4 +1,4 @@
-package route
+package v1
 
 import (
 	"bytes"
