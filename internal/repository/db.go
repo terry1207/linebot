@@ -29,7 +29,7 @@ func InitDbContext() {
 	}
 
 	//migrate table
-	_ = db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&model.Camp{})
+	_ = db.AutoMigrate(&model.Camp{})
 }
 
 func BeginTranscation(db *gorm.DB, process func(tx *gorm.DB) error) error {
