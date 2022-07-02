@@ -10,8 +10,6 @@ import (
 
 	//"linebot/api/v1/front"
 
-	"linebot/internal/repository"
-
 	"linebot/internal/user_search"
 
 	"github.com/gin-gonic/gin"
@@ -26,10 +24,6 @@ func RepeatHandler(c *gin.Context) {
 	}
 	c.String(http.StatusOK, buffer.String())
 
-}
-
-func DbTest(c *gin.Context) {
-	repository.InsertTest()
 }
 
 var post bool
