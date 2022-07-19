@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"linebot/config"
 
 	"linebot/internal/route"
@@ -16,4 +17,5 @@ func main() {
 	ginroute := route.InitRouter()
 
 	ginroute.Run(":" + config.HttpPort)
+	fmt.Println("Hi")
 }
