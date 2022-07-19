@@ -4,7 +4,9 @@ import "gorm.io/gorm"
 
 type Camp struct {
 	gorm.Model
-	Name string `gorm:"type:varchar(20);not null;default:''" json:"name"`
-	City string `gorm:"type:varchar(20);not null;default:''" json:"city"`
-	Town string `gorm:"type:varchar(20);not null;default:''" json:"town"`
+	CampName       string `gorm:"type:varchar(100);not null;default:''" json:"CampName"`
+	AddressCountry string `gorm:"type:varchar(10);not null;default:''" json:"AddressCountry"`
+	AddressCity    string `gorm:"type:varchar(10);not null;default:''" json:"AddressCity"`
+	AddressDetail  string `gorm:"type:varchar(100);not null;default:''" json:"AddressDetail"`
+	//TagList        []string `gorm:"type:varchar(999);not null;default:''" json:"TagList"`
 }
