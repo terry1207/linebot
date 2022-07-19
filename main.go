@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	repository.InitDbContext()
+	//repository.InitDbContext()
+	repository.InitDb_local()
 
 	ginroute := route.InitRouter()
 

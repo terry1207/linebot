@@ -12,12 +12,22 @@ import (
 
 func CreateCampInfo(c *gin.Context) {
 	var test model.Camp
+	// fmt.Println(c.Query("index"))
+	// fmt.Println(c.Query("name"))
 
-	test = model.Camp{
-		Name: "哈囉營地",
-		City: "南投",
-		Town: "埔里",
-	}
+	// name := c.Query("name")
+	// city := c.Query("city")
+	// town := c.Query("town")
+	// phone := c.Query("phone")
+
+	// test = model.Camp{
+
+	// 	Name:        name,
+	// 	City:        city,
+	// 	Town:        town,
+	// 	PhoneNumber: phone,
+	// }
+	// fmt.Println(test)
 
 	err := repository.CreateNewCamp(&test)
 	if err != nil {
@@ -37,7 +47,7 @@ func GetCampInfo(c *gin.Context) {
 		return
 	}
 
-	if camp.Name == "" {
+	if camp.CampName == "" {
 		response.Response(c, errmsg.ERROR_ACCOUNT_NOT_EXIST)
 		return
 	}
