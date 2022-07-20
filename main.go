@@ -12,11 +12,11 @@ import (
 
 func main() {
 	//repository.InitDbContext()
-	repository.InitDb_local()
+	repository.InitDbContext()
 
 	ginroute := route.InitRouter()
 
 	ginroute.Run(":" + config.HttpPort)
 
-	//Test
+	//Test2
 }
