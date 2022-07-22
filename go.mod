@@ -5,6 +5,7 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.7
+	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.6
 	github.com/line/line-bot-sdk-go/v7 v7.16.0
 	gorm.io/driver/postgres v1.3.7
