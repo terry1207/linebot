@@ -10,5 +10,5 @@ type Tag struct {
 
 type TagMap struct {
 	gorm.Model
-	TagMap_CampID map[string]string `gorm:"type:varchar(999);not null;default:''" json:"TagMapCampID"`
+	TagMap_CampID string `gorm:"type:varchar(999);not null;default:''" json:"TagMapCampID"`
 }

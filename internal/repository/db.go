@@ -5,6 +5,7 @@ import (
 	"linebot/internal/model"
 	"os"
 
+	_ "github.com/joho/godotenv/autoload"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,7 @@ func InitDbContext() {
 	// 	log.Fatalf("Error opening database: %q", err)
 	// }
 
+	fmt.Println("dsn:", os.Getenv("DATABASE_URL"))
 	db, err = gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
 
 	if err != nil {
@@ -27,9 +29,10 @@ func InitDbContext() {
 		//退出程序
 		os.Exit(1)
 	}
+	db.Migrator().DropTable(&model.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
 
 	//migrate table
-	_ = db.AutoMigrate(&model.Camp{})
+	_ = db.AutoMigrate(&model.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
 }
 
 func BeginTranscation(db *gorm.DB, process func(tx *gorm.DB) error) error {
