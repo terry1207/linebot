@@ -14,9 +14,9 @@ func InitRouter() *gin.Engine {
 	//richmenu.Build_RichMenu()
 
 	router := gin.Default()
-	router.Use(gin.BasicAuth(gin.Accounts{
-		"admin": "123456",
-	}))
+	// router.Use(gin.BasicAuth(gin.Accounts{
+	// 	"admin": "123456",
+	// }))
 	router.LoadHTMLGlob("web/templates/*.tmpl.html")
 	router.Static("/static", "static")
 
@@ -32,6 +32,12 @@ func InitRouter() *gin.Engine {
 		req, _ := c.Get("request")
 		fmt.Println("request", req)
 		c.JSON(200, gin.H{"request": req})
+	})
+
+	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
+		req, _ := c.Get("email")
+		fmt.Println("email", req)
+		c.JSON(200, gin.H{"email": req})
 	})
 	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
