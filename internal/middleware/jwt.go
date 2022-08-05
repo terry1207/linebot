@@ -25,3 +25,12 @@ func MiddlewareTest() gin.HandlerFunc {
 
 	}
 }
+
+func JwtMiddleware() func(c *gin.Context) {
+	return func(c *gin.Context) {
+		authHeader := c.Request.Header.Get("Authorization")
+		fmt.Println("authHeader", authHeader)
+		c.Set("email", "eeeee")
+		c.Next()
+	}
+}
