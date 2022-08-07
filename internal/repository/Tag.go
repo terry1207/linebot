@@ -1,6 +1,8 @@
-package model
+package repository
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Tag struct {
 	gorm.Model
@@ -8,7 +10,9 @@ type Tag struct {
 	TagNum  int    `gorm:"type:smallint;not null;default:0" json:"TagNum"`
 }
 
-type TagMap struct {
-	gorm.Model
-	TagMap_CampID string `gorm:"type:varchar(999);not null;default:''" json:"TagMapCampID"`
+//新建標籤
+func (tag Tag) CreateNewTag() error {
+	return BeginTranscation(db, func(tx *gorm.DB) error {
+		return tx.Create(&tag).Error
+	})
 }

@@ -2,7 +2,6 @@ package v1
 
 import (
 	"linebot/internal/errmsg"
-	"linebot/internal/model"
 	"linebot/internal/repository"
 	"linebot/internal/response"
 	"net/http"
@@ -11,7 +10,7 @@ import (
 )
 
 func CreateCampInfo(c *gin.Context) {
-	var test model.Camp
+	var test repository.Camp
 	// fmt.Println(c.Query("index"))
 	// fmt.Println(c.Query("name"))
 
@@ -29,7 +28,7 @@ func CreateCampInfo(c *gin.Context) {
 	// }
 	// fmt.Println(test)
 
-	err := repository.CreateNewCamp(&test)
+	err := test.CreateNewCamp()
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
