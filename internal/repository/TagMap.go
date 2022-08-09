@@ -15,3 +15,23 @@ func (tagmap TagMap) CreateNewTagMap() error {
 		return tx.Create(&tagmap).Error
 	})
 }
+
+func GetAllTagMap() ([]TagMap, error) {
+	var TagMaps []TagMap
+	err := db.Find(&TagMaps).Error
+
+	return TagMaps, err
+}
+
+func GetTagMapById(Id int64) (TagMap, error) {
+	var GetTagMap TagMap
+	err := db.Where("Id=?", Id).Find(&GetTagMap).Error
+
+	return GetTagMap, err
+}
+
+func DeleteTagMapById(Id int64) (TagMap, error) {
+	var TagMap TagMap
+	err := db.Where("Id=?", Id).Delete(&TagMap).Error
+	return TagMap, err
+}

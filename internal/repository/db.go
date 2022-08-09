@@ -28,10 +28,10 @@ func InitDbContext() {
 		//退出程序
 		os.Exit(1)
 	}
-	db.Migrator().DropTable(&Camp{}, &Account{}, &Tag{}, &TagMap{})
+	db.Migrator().DropTable(&Camp{}, &User{}, &Tag{}, &TagMap{})
 
 	//migrate table
-	_ = db.AutoMigrate(&Camp{}, &Account{}, &Tag{}, &TagMap{})
+	_ = db.AutoMigrate(&Camp{}, &User{}, &Tag{}, &TagMap{})
 }
 
 func BeginTranscation(db *gorm.DB, process func(tx *gorm.DB) error) error {

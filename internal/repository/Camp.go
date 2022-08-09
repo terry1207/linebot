@@ -21,13 +21,6 @@ func (camp *Camp) CreateNewCamp() error {
 
 }
 
-func QueryCampByCampName(campName string) (*Camp, error) {
-	var camp Camp
-	err := db.Limit(1).Where("Name=?", campName).Find(&camp).Error
-	return &camp, err
-
-}
-
 func GetAllCamp() ([]Camp, error) {
 	var Camps []Camp
 	err := db.Find(&Camps).Error
@@ -45,9 +38,9 @@ func GetCampById(Id int64) (*Camp, error) {
 
 }
 
-func Delete(Id int64) (Camp, error) {
+func DeleteCampById(Id int64) (Camp, error) {
 	var camp Camp
-	err := db.Where("ID=?", Id).Delete(camp).Error
+	err := db.Where("ID=?", Id).Delete(&camp).Error
 
 	return camp, err
 

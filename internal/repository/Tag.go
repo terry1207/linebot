@@ -16,3 +16,23 @@ func (tag Tag) CreateNewTag() error {
 		return tx.Create(&tag).Error
 	})
 }
+
+func GetAllTag() ([]Tag, error) {
+	var Tags []Tag
+	err := db.Find(&Tags).Error
+
+	return Tags, err
+}
+
+func GetTagById(Id int64) (Tag, error) {
+	var GetTag Tag
+	err := db.Where("Id=?", Id).Find(&GetTag).Error
+
+	return GetTag, err
+}
+
+func DeleteTagById(Id int64) (Tag, error) {
+	var Tag Tag
+	err := db.Where("Id=?", Id).Delete(&Tag).Error
+	return Tag, err
+}
