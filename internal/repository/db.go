@@ -2,7 +2,6 @@ package repository
 
 import (
 	"fmt"
-	"linebot/internal/model"
 	"os"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -29,10 +28,10 @@ func InitDbContext() {
 		//退出程序
 		os.Exit(1)
 	}
-	db.Migrator().DropTable(&model.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
+	db.Migrator().DropTable(&Camp{}, &User{}, &Tag{}, &TagMap{})
 
 	//migrate table
-	_ = db.AutoMigrate(&model.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
+	_ = db.AutoMigrate(&Camp{}, &User{}, &Tag{}, &TagMap{})
 }
 
 func BeginTranscation(db *gorm.DB, process func(tx *gorm.DB) error) error {

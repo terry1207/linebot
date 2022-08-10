@@ -2,15 +2,18 @@ package repository
 
 import (
 	"fmt"
-	"linebot/internal/model"
+	"log"
 	"testing"
 )
 
-func BenchmarkCreateDataTest(b *testing.B) {
-
+func init() {
 	InitDbContext()
+}
+
+func BenchmarkCampTest(b *testing.B) {
+
 	var (
-		camp = model.Camp{
+		camp = Camp{
 
 			CampName:       "哈哈營地",
 			AddressCountry: "彰化",
@@ -18,61 +21,164 @@ func BenchmarkCreateDataTest(b *testing.B) {
 			AddressDetail:  "223號",
 			TagList:        "ee",
 		}
+		camp2 = Camp{
 
-		account = model.Account{
+			CampName:       "哈哈營地",
+			AddressCountry: "彰化",
+			AddressCity:    "彰化市",
+			AddressDetail:  "223號",
+			TagList:        "ee",
+		}
+	)
+
+	camp.CreateNewCamp()
+	camp2.CreateNewCamp()
+
+	getAllcamp, err := GetAllCamp()
+	if err != nil {
+		log.Println(err)
+	}
+	for _, r := range getAllcamp {
+		fmt.Println(r)
+	}
+
+	getcampbyid, err := GetCampById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(getcampbyid)
+
+	delcampbyid, err := DeleteCampById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(delcampbyid)
+
+}
+
+func BenchmarkUserTest(b *testing.B) {
+
+	var (
+		account = User{
 
 			Password: "asdfggg",
 		}
 
-		tag = model.Tag{
+		account2 = User{
+
+			Password: "asdfggg",
+		}
+	)
+
+	account.CreateNewUser()
+	account2.CreateNewUser()
+
+	getAlluser, err := GetAllUser()
+	if err != nil {
+		log.Println(err)
+	}
+	for _, r := range getAlluser {
+		fmt.Println(r)
+	}
+
+	getuserbyid, err := GetUserById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(getuserbyid)
+
+	deluserbyid, err := DeleteUserById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(deluserbyid)
+
+}
+
+func BenchmarkTagTest(b *testing.B) {
+
+	var (
+		tag = Tag{
 
 			TagName: "有水池",
 			TagNum:  20,
 		}
-		tagmap = model.TagMap{
+
+		tag2 = Tag{
+
+			TagName: "有水池",
+			TagNum:  20,
+		}
+	)
+
+	tag.CreateNewTag()
+	tag2.CreateNewTag()
+
+	getAlltag, err := GetAllTag()
+	if err != nil {
+		log.Println(err)
+	}
+	for _, r := range getAlltag {
+		fmt.Println(r)
+	}
+
+	getTagbyid, err := GetTagById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(getTagbyid)
+
+	delTagbyid, err := DeleteTagById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(delTagbyid)
+
+}
+
+func BenchmarkTagMapTest(b *testing.B) {
+
+	var (
+		tagmap = TagMap{
+
+			TagMap_CampID: "99t",
+		}
+
+		tagmap2 = TagMap{
 
 			TagMap_CampID: "99t",
 		}
 	)
 
-	CreateNewCamp(&camp)
-	CreateNewUser(&account)
-	CreateNewTag(&tag)
-	CreateNewTagMap(&tagmap)
+	tagmap.CreateNewTagMap()
+	tagmap2.CreateNewTagMap()
 
-	var p []model.Camp
-	var p1 []model.Account
-	var p2 []model.Tag
-	var p3 []model.TagMap
-
-	db.Take(&p)
-	db.Take(&p1)
-	db.Take(&p2)
-	db.Take(&p3)
-
-	fmt.Println("camp", p)
-	fmt.Println("account", p1)
-	fmt.Println("tag", p2)
-	fmt.Println("tagmap", p3)
-
-	// fmt.Println("account")
-	// res1 := db.Find(&model.Account{})
-	// fmt.Println(res1)
-
-	// fmt.Println("tag")
-	// res2 := db.Find(&model.Tag{})
-	// fmt.Println(res2)
-
-	// fmt.Println("tagmap")
-	// res3 := db.Find(&model.TagMap{})
-	// fmt.Println(res3)
-
-}
-
-func BenchmarkPrintInt2String01(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		fmt.Println(
-			"12",
-		)
+	getAlltagmap, err := GetAllTagMap()
+	if err != nil {
+		log.Println(err)
 	}
+	for _, r := range getAlltagmap {
+		fmt.Println(r)
+	}
+
+	getTagMapbyid, err := GetTagMapById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(getTagMapbyid)
+
+	delTagMapbyid, err := DeleteTagMapById(1)
+
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(delTagMapbyid)
+
 }

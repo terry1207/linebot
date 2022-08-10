@@ -32,6 +32,12 @@ func InitRouter() *gin.Engine {
 
 		c.JSON(200, gin.H{"token": req})
 	})
+
+	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
+		req, _ := c.Get("email")
+		fmt.Println("email", req)
+		c.JSON(200, gin.H{"email": req})
+	})
 	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
 
