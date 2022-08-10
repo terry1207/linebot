@@ -1,7 +1,6 @@
 package route
 
 import (
-	"fmt"
 	v1 "linebot/api/v1"
 	"net/http"
 
@@ -14,9 +13,9 @@ func InitRouter() *gin.Engine {
 	//richmenu.Build_RichMenu()
 
 	router := gin.Default()
-	router.Use(gin.BasicAuth(gin.Accounts{
-		"admin": "123456",
-	}))
+	// router.Use(gin.BasicAuth(gin.Accounts{
+	// 	"admin": "123456",
+	// }))
 	router.LoadHTMLGlob("web/templates/*.tmpl.html")
 	router.Static("/static", "static")
 
@@ -28,10 +27,10 @@ func InitRouter() *gin.Engine {
 	router.GET("db/get", v1.GetCampInfo)
 	router.Any("/callback", v1.ReplyMessage)
 
-	router.GET("/ce", middleware.MiddlewareTest(), func(c *gin.Context) {
-		req, _ := c.Get("request")
-		fmt.Println("request", req)
-		c.JSON(200, gin.H{"request": req})
+	router.GET("/ce", middleware.JwtMiddleware(), func(c *gin.Context) {
+		req, _ := c.Get("token")
+
+		c.JSON(200, gin.H{"token": req})
 	})
 	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
