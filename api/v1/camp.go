@@ -5,11 +5,12 @@ import (
 	"linebot/internal/repository"
 	"linebot/internal/response"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CreateCampInfo(c *gin.Context) {
+func CreateCamp(c *gin.Context) {
 	var test repository.Camp
 	// fmt.Println(c.Query("index"))
 	// fmt.Println(c.Query("name"))
@@ -37,10 +38,10 @@ func CreateCampInfo(c *gin.Context) {
 	response.Response(c, errmsg.SUCCESS)
 }
 
-func GetCampInfo(c *gin.Context) {
-	var query = "哈囉營地"
+func GetCamp(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("campId"))
 
-	camp, err := repository.QueryCampByCampName(query)
+	camp, err := repository.GetCampById(int64(id))
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
@@ -52,4 +53,17 @@ func GetCampInfo(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, camp)
+}
+
+func GetCampById(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("campId"))
+	c.String(200, "%s", id)
+}
+
+func UpdateCamp(c *gin.Context) {
+
+}
+
+func DeleteCamp(c *gin.Context) {
+
 }
