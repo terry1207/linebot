@@ -28,7 +28,7 @@ func InitDbContext() {
 		//退出程序
 		os.Exit(1)
 	}
-	db.Migrator().DropTable(&Camp{}, &User{}, &Tag{}, &TagMap{})
+	//db.Migrator().DropTable(&Camp{}, &User{}, &Tag{}, &TagMap{})
 
 	//migrate table
 	_ = db.AutoMigrate(&Camp{}, &User{}, &Tag{}, &TagMap{})
