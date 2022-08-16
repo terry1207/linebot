@@ -38,9 +38,9 @@ func CreateCampInfo(c *gin.Context) {
 }
 
 func GetCampInfo(c *gin.Context) {
-	var query = "哈囉營地"
+	var id = 1
 
-	camp, err := repository.QueryCampByCampName(query)
+	camp, err := repository.GetCampById(int64(id))
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
