@@ -3,6 +3,7 @@ package main
 import (
 	"linebot/config"
 
+	"linebot/internal/repository"
 	"linebot/internal/route"
 
 	_ "github.com/lib/pq"
@@ -10,7 +11,7 @@ import (
 
 func main() {
 	//repository.InitDbContext()
-	//repository.InitDbContext()
+	repository.InitDbContext()
 
 	ginroute := route.InitRouter()
 

@@ -1,44 +1,40 @@
 package v1
 
 import (
+	"fmt"
 	"linebot/internal/errmsg"
 	"linebot/internal/repository"
 	"linebot/internal/response"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CreateCampInfo(c *gin.Context) {
-	var test repository.Camp
-	// fmt.Println(c.Query("index"))
-	// fmt.Println(c.Query("name"))
+func CreateCamp(c *gin.Context) {
+	var camp repository.Camp
+	err := c.BindJSON(&camp)
+	if err != nil {
+		return
+	}
 
-	// name := c.Query("name")
-	// city := c.Query("city")
-	// town := c.Query("town")
-	// phone := c.Query("phone")
+	camp.CreatedAt = time.Now()
+	camp.UpdatedAt = time.Now()
+	fmt.Printf("%v\n", camp)
 
-	// test = model.Camp{
-
-	// 	Name:        name,
-	// 	City:        city,
-	// 	Town:        town,
-	// 	PhoneNumber: phone,
-	// }
-	// fmt.Println(test)
-
-	err := test.CreateNewCamp()
+	err = camp.CreateNewCamp()
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
 	}
-
+	fmt.Printf("%v\n", camp)
+	c.JSON(200, camp)
 	response.Response(c, errmsg.SUCCESS)
 }
 
-func GetCampInfo(c *gin.Context) {
-	var id = 1
+func GetCamp(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("campId"))
 
 	camp, err := repository.GetCampById(int64(id))
 	if err != nil {
@@ -52,4 +48,17 @@ func GetCampInfo(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, camp)
+}
+
+func GetCampById(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("campId"))
+	c.String(200, "%s", id)
+}
+
+func UpdateCamp(c *gin.Context) {
+
+}
+
+func DeleteCamp(c *gin.Context) {
+
 }
