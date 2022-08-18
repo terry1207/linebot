@@ -12,29 +12,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateCamp(c *gin.Context) {
-	var camp repository.Camp
-	err := c.BindJSON(&camp)
+func CreateTagMap(c *gin.Context) {
+	var tagmap repository.TagMap
+	err := c.BindJSON(&tagmap)
 	if err != nil {
 		return
 	}
 
-	camp.CreatedAt = time.Now()
-	camp.UpdatedAt = time.Now()
+	tagmap.CreatedAt = time.Now()
+	tagmap.UpdatedAt = time.Now()
 
-	err = camp.CreateNewCamp()
+	err = tagmap.CreateNewTagMap()
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
 	}
-	fmt.Printf("%v\n", camp)
-	c.JSON(200, camp)
+	fmt.Printf("%v\n", tagmap)
+	c.JSON(200, tagmap)
 	response.Response(c, errmsg.SUCCESS)
 }
 
-func GetCamp(c *gin.Context) {
+func GetTagMap(c *gin.Context) {
 
-	camps, err := repository.GetAllCamp()
+	camps, err := repository.GetAllTagMap()
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR_ACCOUNT_NOT_EXIST)
@@ -44,28 +44,28 @@ func GetCamp(c *gin.Context) {
 	c.JSON(http.StatusOK, camps)
 }
 
-func GetCampById(c *gin.Context) {
+func GetTagMapById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("campId"))
-	camp, err := repository.GetCampById(int64(id))
+	tagmap, err := repository.GetTagMapById(int64(id))
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
 	}
-	c.JSON(200, camp)
+	c.JSON(200, tagmap)
 }
 
-func UpdateCamp(c *gin.Context) {
+func UpdateTagMap(c *gin.Context) {
 
 }
 
-func DeleteCamp(c *gin.Context) {
+func DeleteTagMap(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("campId"))
 
-	camp, err := repository.DeleteCampById(int64(id))
+	tagmap, err := repository.DeleteTagMapById(int64(id))
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
 	}
-	c.JSON(200, camp)
+	c.JSON(200, tagmap)
 }

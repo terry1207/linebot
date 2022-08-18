@@ -28,10 +28,10 @@ func InitRouter() *gin.Engine {
 	router.GET("db/get", v1.GetCamp)
 	router.Any("/callback", v1.ReplyMessage)
 
-	router.GET("/ce", middleware.MiddlewareTest(), func(c *gin.Context) {
-		req, _ := c.Get("request")
-		fmt.Println("request", req)
-		c.JSON(200, gin.H{"request": req})
+	router.GET("/ce", middleware.JwtMiddleware(), func(c *gin.Context) {
+		req, _ := c.Get("token")
+
+		c.JSON(200, gin.H{"token": req})
 	})
 
 	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
