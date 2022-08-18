@@ -8,7 +8,7 @@ import (
 )
 
 var RegisterCampRoutes = func(r *gin.Engine) {
-	r.POST("/camp", middleware.JwtMiddleware(), v1.CreateCamp)
+	r.POST("/camp", v1.CreateCamp)
 	r.GET("/camp", middleware.JwtMiddleware(), v1.GetCamp)
 	r.GET("/camp/:campId", middleware.JwtMiddleware(), v1.GetCampById)
 	r.PUT("/camp/:campId", middleware.JwtMiddleware(), v1.UpdateCamp)
