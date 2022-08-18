@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"linebot/vendor/gorm.io/driver/postgres"
+
 	_ "github.com/joho/godotenv/autoload"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
