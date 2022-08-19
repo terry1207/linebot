@@ -34,14 +34,14 @@ func CreateUser(c *gin.Context) {
 
 func GetUser(c *gin.Context) {
 
-	Users, err := repository.GetAllUser()
+	users, err := repository.GetAllUser()
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR_ACCOUNT_NOT_EXIST)
 		return
 	}
 
-	c.JSON(http.StatusOK, Users)
+	c.JSON(http.StatusOK, users)
 }
 
 func GetUserById(c *gin.Context) {
@@ -59,7 +59,7 @@ func UpdateUser(c *gin.Context) {
 }
 
 func DeleteUser(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("UserId"))
+	id, _ := strconv.Atoi(c.Param("userId"))
 
 	user, err := repository.DeleteUserById(int64(id))
 

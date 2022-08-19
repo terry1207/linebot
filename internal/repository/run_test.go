@@ -19,7 +19,7 @@ func BenchmarkCampTest(b *testing.B) {
 			AddressCountry: "彰化",
 			AddressCity:    "彰化市",
 			AddressDetail:  "223號",
-			TagList:        "ee",
+			TagList:        []string{"TTT", "GGG"},
 		}
 		camp2 = Camp{
 
@@ -27,35 +27,40 @@ func BenchmarkCampTest(b *testing.B) {
 			AddressCountry: "彰化",
 			AddressCity:    "彰化市",
 			AddressDetail:  "223號",
-			TagList:        "ee",
+			TagList:        []string{"TTT", "GGG"},
 		}
 	)
 
-	camp.CreateNewCamp()
-	camp2.CreateNewCamp()
+	i := 0
+	if i == 0 {
+		fmt.Println("Create")
+		camp.CreateNewCamp()
+		camp2.CreateNewCamp()
 
-	getAllcamp, err := GetAllCamp()
-	if err != nil {
-		log.Println(err)
+		fmt.Println("Get")
+
+		getAllcamp, err := GetAllCamp()
+		if err != nil {
+			log.Println(err)
+		}
+		for _, r := range getAllcamp {
+			fmt.Println(r)
+		}
+
+		// getcampbyid, err := GetCampById(1)
+
+		// if err != nil {
+		// 	log.Println(err)
+		// }
+		// fmt.Println(getcampbyid)
+
+		// delcampbyid, err := DeleteCampById(1)
+
+		// if err != nil {
+		// 	log.Println(err)
+		// }
+		// fmt.Println(delcampbyid)
 	}
-	for _, r := range getAllcamp {
-		fmt.Println(r)
-	}
-
-	getcampbyid, err := GetCampById(1)
-
-	if err != nil {
-		log.Println(err)
-	}
-	fmt.Println(getcampbyid)
-
-	delcampbyid, err := DeleteCampById(1)
-
-	if err != nil {
-		log.Println(err)
-	}
-	fmt.Println(delcampbyid)
-
 }
 
 func BenchmarkUserTest(b *testing.B) {
@@ -140,6 +145,20 @@ func BenchmarkTagTest(b *testing.B) {
 	}
 	fmt.Println(delTagbyid)
 
+	err = UpdateTag_from_CampId(2, 1)
+	if err != nil {
+		log.Println(err)
+	}
+
+	fmt.Println("Update")
+
+	getAlltag, err = GetAllTag()
+	if err != nil {
+		log.Println(err)
+	}
+	for _, r := range getAlltag {
+		fmt.Println(r)
+	}
 }
 
 func BenchmarkTagMapTest(b *testing.B) {

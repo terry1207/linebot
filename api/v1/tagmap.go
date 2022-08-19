@@ -34,18 +34,18 @@ func CreateTagMap(c *gin.Context) {
 
 func GetTagMap(c *gin.Context) {
 
-	camps, err := repository.GetAllTagMap()
+	tagmaps, err := repository.GetAllTagMap()
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR_ACCOUNT_NOT_EXIST)
 		return
 	}
 
-	c.JSON(http.StatusOK, camps)
+	c.JSON(http.StatusOK, tagmaps)
 }
 
 func GetTagMapById(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("campId"))
+	id, _ := strconv.Atoi(c.Param("tagmapId"))
 	tagmap, err := repository.GetTagMapById(int64(id))
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
@@ -59,7 +59,7 @@ func UpdateTagMap(c *gin.Context) {
 }
 
 func DeleteTagMap(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("campId"))
+	id, _ := strconv.Atoi(c.Param("tagmapId"))
 
 	tagmap, err := repository.DeleteTagMapById(int64(id))
 

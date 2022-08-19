@@ -8,10 +8,10 @@ import (
 )
 
 var RegisterTagRoutes = func(r *gin.Engine) {
-	r.POST("/camp", middleware.JwtMiddleware(), v1.CreateTag)
-	r.GET("/camp", middleware.JwtMiddleware(), v1.GetTag)
-	r.GET("/camp/:campId", middleware.JwtMiddleware(), v1.GetTagById)
-	r.PUT("/camp/:campId", middleware.JwtMiddleware(), v1.UpdateTag)
-	r.DELETE("/camp/:campId", middleware.JwtMiddleware(), v1.DeleteTag)
+	r.POST("/tag", middleware.JwtMiddleware(), v1.CreateTag)
+	r.GET("/tag", middleware.JwtMiddleware(), v1.GetTag)
+	r.GET("/tag/:tagId", middleware.JwtMiddleware(), v1.GetTagById)
+	r.PUT("/tag/:tagId", middleware.JwtMiddleware(), v1.UpdateTag)
+	r.DELETE("/tag/:tagId", middleware.JwtMiddleware(), v1.DeleteTag)
 
 }

@@ -8,10 +8,10 @@ import (
 )
 
 var RegisterUserRoutes = func(r *gin.Engine) {
-	r.POST("/camp", middleware.JwtMiddleware(), v1.CreateUser)
-	r.GET("/camp", middleware.JwtMiddleware(), v1.GetUser)
-	r.GET("/camp/:campId", middleware.JwtMiddleware(), v1.GetUserById)
-	r.PUT("/camp/:campId", middleware.JwtMiddleware(), v1.UpdateUser)
-	r.DELETE("/camp/:campId", middleware.JwtMiddleware(), v1.DeleteUser)
+	r.POST("/user", middleware.JwtMiddleware(), v1.CreateUser)
+	r.GET("/user", middleware.JwtMiddleware(), v1.GetUser)
+	r.GET("/user/:userId", middleware.JwtMiddleware(), v1.GetUserById)
+	r.PUT("/user/:userId", middleware.JwtMiddleware(), v1.UpdateUser)
+	r.DELETE("/user/:userId", middleware.JwtMiddleware(), v1.DeleteUser)
 
 }

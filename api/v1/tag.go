@@ -34,18 +34,18 @@ func CreateTag(c *gin.Context) {
 
 func GetTag(c *gin.Context) {
 
-	camps, err := repository.GetAllTag()
+	tags, err := repository.GetAllTag()
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR_ACCOUNT_NOT_EXIST)
 		return
 	}
 
-	c.JSON(http.StatusOK, camps)
+	c.JSON(http.StatusOK, tags)
 }
 
 func GetTagById(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("campId"))
+	id, _ := strconv.Atoi(c.Param("tagId"))
 	tag, err := repository.GetTagById(int64(id))
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
@@ -59,7 +59,7 @@ func UpdateTag(c *gin.Context) {
 }
 
 func DeleteTag(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("campId"))
+	id, _ := strconv.Atoi(c.Param("tagId"))
 
 	tag, err := repository.DeleteTagById(int64(id))
 

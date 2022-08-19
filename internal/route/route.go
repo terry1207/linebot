@@ -24,15 +24,8 @@ func InitRouter() *gin.Engine {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
 	router.GET("/repeat", v1.RepeatHandler)
-	router.GET("/db/create", v1.CreateCamp)
-	router.GET("db/get", v1.GetCamp)
+
 	router.Any("/callback", v1.ReplyMessage)
-
-	router.GET("/ce", middleware.JwtMiddleware(), func(c *gin.Context) {
-		req, _ := c.Get("token")
-
-		c.JSON(200, gin.H{"token": req})
-	})
 
 	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
 		req, _ := c.Get("email")
@@ -41,6 +34,9 @@ func InitRouter() *gin.Engine {
 	})
 
 	RegisterCampRoutes(router)
+	RegisterTagMapRoutes(router)
+	RegisterTagRoutes(router)
+	RegisterTagMapRoutes(router)
 	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
 
