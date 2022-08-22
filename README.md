@@ -47,5 +47,5 @@ For more information about using Go on Heroku, see these Dev Center articles:
 
 - [Go on Heroku](https://devcenter.heroku.com/categories/go)
 
-test2
+https://github.com/qor/qor-example/blob/master/models/orders/delivery_method.go
 
