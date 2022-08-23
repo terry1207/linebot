@@ -1,4 +1,4 @@
-package repository
+package db
 
 import (
 	"fmt"
@@ -9,18 +9,18 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+var DB *gorm.DB
 var err error
 
 func InitDbContext() {
 	fmt.Println("初始化數據庫")
-	// db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	// DB, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	// if err != nil {
 	// 	log.Fatalf("Error opening database: %q", err)
 	// }
 
 	fmt.Println("dsn:", os.Getenv("DATABASE_URL"))
-	db, err = gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
+	DB, err = gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("connet database fail,pleaes check parametre", err)
@@ -29,14 +29,14 @@ func InitDbContext() {
 		os.Exit(1)
 	}
 
-	db.Migrator().DropTable(&Camp{}, &User{}, &Tag{}, &TagMap{})
+	// DB.Migrator().DropTable(&product.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
 
-	//migrate table
-	_ = db.AutoMigrate(&Camp{}, &User{}, &Tag{}, &TagMap{})
+	// //migrate table
+	// _ = DB.AutoMigrate(&model.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
 }
 
-func BeginTranscation(db *gorm.DB, process func(tx *gorm.DB) error) error {
-	tx := db.Begin()
+func BeginTranscation(DB *gorm.DB, process func(tx *gorm.DB) error) error {
+	tx := DB.Begin()
 
 	defer func() {
 		if r := recover(); r != nil {

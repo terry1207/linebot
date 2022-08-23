@@ -2,9 +2,9 @@ package route
 
 import (
 	"fmt"
-	v1 "linebot/api/v1"
 	"net/http"
 
+	"linebot/app/line"
 	"linebot/internal/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -23,20 +23,16 @@ func InitRouter() *gin.Engine {
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
-	router.GET("/repeat", v1.RepeatHandler)
+	router.GET("/repeat", line.RepeatHandler)
 
-	router.Any("/callback", v1.ReplyMessage)
+	router.Any("/callback", line.ReplyMessage)
 
 	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
 		req, _ := c.Get("email")
 		fmt.Println("email", req)
 		c.JSON(200, gin.H{"email": req})
 	})
-
-	RegisterCampRoutes(router)
-	RegisterTagMapRoutes(router)
-	RegisterTagRoutes(router)
-	RegisterTagMapRoutes(router)
+	RegisterAccountRoutes(router)
 	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
 

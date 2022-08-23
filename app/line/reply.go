@@ -1,4 +1,4 @@
-package v1
+package line
 
 import (
 	"bytes"
