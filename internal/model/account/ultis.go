@@ -1,35 +1,34 @@
 package account
 
 import (
-	"linebot/internal/model/account"
-	"linebot/internal/repository/db"
+	"linebot/internal/model/db"
 
 	"gorm.io/gorm"
 )
 
 //新建帳戶
-func AddAccount(account *account.Account) error {
+func Add(account *Account) error {
 	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
 		return tx.Create(&account).Error
 	})
 }
 
-func GetAllAccount() ([]account.Account, error) {
-	var Accounts []account.Account
+func GetAll() ([]Account, error) {
+	var Accounts []Account
 	err := db.DB.Find(&Accounts).Error
 
 	return Accounts, err
 }
 
-func GetAccountById(Id int64) (account.Account, error) {
-	var GetAccount account.Account
+func GetById(Id int64) (Account, error) {
+	var GetAccount Account
 	err := db.DB.Where("Id=?", Id).Find(&GetAccount).Error
 
 	return GetAccount, err
 }
 
-func DeleteAccountById(Id int64) (account.Account, error) {
-	var account account.Account
+func DeleteById(Id int64) (Account, error) {
+	var account Account
 	err := db.DB.Where("Id=?", Id).Delete(&account).Error
 	return account, err
 }

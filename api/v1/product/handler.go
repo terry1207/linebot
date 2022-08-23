@@ -1,8 +1,8 @@
 package product
 
 import (
+	"linebot/internal/model/db"
 	"linebot/internal/model/product"
-	"linebot/internal/repository/db"
 
 	"gorm.io/gorm"
 )

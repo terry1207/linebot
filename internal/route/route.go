@@ -2,10 +2,9 @@ package route
 
 import (
 	"fmt"
-	"net/http"
-
-	"linebot/app/line"
+	"linebot/api/v1/line"
 	"linebot/internal/middleware"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,8 +31,7 @@ func InitRouter() *gin.Engine {
 		fmt.Println("email", req)
 		c.JSON(200, gin.H{"email": req})
 	})
-	RegisterAccountRoutes(router)
-	// lineroute := router.Group("/callback")
+	RegisterAccountRoutes(router) // lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
 
 	// This is just sample code.

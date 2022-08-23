@@ -14,28 +14,28 @@ import (
 )
 
 func CreateAccount(c *gin.Context) {
-	var account account.Account
-	err := c.BindJSON(&account)
+	var new_account account.Account
+	err := c.BindJSON(&new_account)
 	if err != nil {
 		return
 	}
 
-	account.CreatedAt = time.Now()
-	account.UpdatedAt = time.Now()
+	new_account.CreatedAt = time.Now()
+	new_account.UpdatedAt = time.Now()
 
-	err = Add(&account)
+	err = account.Add(&new_account)
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
 	}
-	fmt.Printf("%v\n", account)
-	c.JSON(200, account)
+	fmt.Printf("%v\n", new_account)
+	c.JSON(200, new_account)
 	response.Response(c, errmsg.SUCCESS)
 }
 
 func GetAccount(c *gin.Context) {
 
-	accounts, err := GetAll()
+	accounts, err := account.GetAll()
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR_ACCOUNT_NOT_EXIST)
@@ -47,7 +47,7 @@ func GetAccount(c *gin.Context) {
 
 func GetAccountById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("AccountId"))
-	account, err := GetById(int64(id))
+	account, err := account.GetById(int64(id))
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return
@@ -62,7 +62,7 @@ func UpdateAccount(c *gin.Context) {
 func DeleteAccount(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("accountId"))
 
-	account, err := DeleteById(int64(id))
+	account, err := account.DeleteById(int64(id))
 
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
