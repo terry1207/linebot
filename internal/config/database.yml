@@ -1,0 +1,6 @@
+db:
+  name: d2qfr5f81g7vlm
+  adapter: postgres
+  host: ec2-52-71-69-66.compute-1.amazonaws.com:5432
+  user: wkkckoevwhzsti
+  password: 756a9057eb6ed63db56541deeb46335868aad00e5f26e0d942d5f021f7df062d
