@@ -15,12 +15,6 @@ type Product struct {
 	Description   string
 }
 
-func AddN(input interface{}) error {
-	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
-		return tx.Create(&input).Error
-	})
-}
-
 func Add(product *Product) error {
 	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
 		return tx.Create(&product).Error
