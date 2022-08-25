@@ -8,13 +8,25 @@ import (
 
 func TestDB(t *testing.T) {
 	InitDbContext()
-	Init()
+	DropTable(&order.OrderItem{}, &order.Order{})
+	// AutoMigrate(&product.Product{})
+	AutoMigrate(&order.OrderItem{}, &order.Order{})
 
-	var test order.Product_List
+	fmt.Println(DB.Migrator().HasTable(&order.OrderItem{}))
+	fmt.Println(DB.Migrator().HasTable(&order.Order{}))
+	DB.Create(&order.OrderItem{Name: "XYY"})
+	DB.Create(&order.Order{
+		OrderItems: order.OrderItem{
+			ID:   1,
+			Name: "XYZ",
+		},
+	})
 
-	DB.Create(&test)
-	var tests []order.Product_List
-	DB.Find(&tests)
-	fmt.Println(tests)
+	var r order.Order
+	DB.Find(&r)
+	fmt.Println(r.OrderItems)
 
+	var t1 order.OrderItem
+	DB.Find(&t1)
+	fmt.Println(t1)
 }

@@ -6,9 +6,9 @@ import (
 
 func Init() {
 	//DropTable(&product.Product{})
-	DropTable(&order.Product_List{})
+	DropTable(&order.OrderItem{}, &order.Order{})
 	// AutoMigrate(&product.Product{})
-	AutoMigrate(&order.Product_List{})
+	AutoMigrate(&order.OrderItem{}, &order.Order{})
 
 }
 
