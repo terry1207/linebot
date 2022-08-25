@@ -4,12 +4,14 @@ module linebot
 go 1.17
 
 require (
+	github.com/amovah/load-env v0.0.0-20220311080214-a1af46a23ebe
 	github.com/gin-gonic/gin v1.7.7
 	github.com/joho/godotenv v1.4.0
 	github.com/lib/pq v1.10.6
 	github.com/line/line-bot-sdk-go/v7 v7.16.0
+	gorm.io/driver/mysql v1.3.6
 	gorm.io/driver/postgres v1.3.7
-	gorm.io/gorm v1.23.7
+	gorm.io/gorm v1.23.8
 )
 
 require (
@@ -17,6 +19,7 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.12.1 // indirect

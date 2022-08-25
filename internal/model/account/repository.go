@@ -1,7 +1,7 @@
 package account
 
 import (
-	"linebot/internal/model/db"
+	"linebot/internal/config/db"
 
 	"gorm.io/gorm"
 )
