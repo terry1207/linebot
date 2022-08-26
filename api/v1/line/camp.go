@@ -1,6 +1,8 @@
 package line
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
@@ -22,8 +24,11 @@ func CampReply(c *gin.Context) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				switch message.Text {
-				case "我要訂營地！":
+				text_trimspace := strings.TrimSpace(message.Text)
+
+				switch {
+				case text_trimspace == "我要訂營地！":
+
 					column1 := linebot.CarouselColumn{
 						ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
 						ImageBackgroundColor: "#FFFFFF",
@@ -79,7 +84,7 @@ func CampReply(c *gin.Context) {
 							ImageSize:        "cover",
 						})).Do()
 				default:
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("yoyo"))
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
 				}
 			}
 		}
