@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"linebot/api/v1/line"
 	"linebot/internal/middleware"
+	"linebot/internal/richmenu"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() *gin.Engine {
-	//richmenu.Build_RichMenu()
+	richmenu.Build_RichMenu()
 
 	router := gin.Default()
 	// router.Use(gin.BasicAuth(gin.Accounts{
@@ -24,14 +25,16 @@ func InitRouter() *gin.Engine {
 	})
 	router.GET("/repeat", line.RepeatHandler)
 
-	router.Any("/callback", line.ReplyMessage)
+	router.Any("/callback", line.CampReply)
 
 	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
 		req, _ := c.Get("email")
 		fmt.Println("email", req)
 		c.JSON(200, gin.H{"email": req})
 	})
-	RegisterAccountRoutes(router) // lineroute := router.Group("/callback")
+	RegisterAccountRoutes(router)
+	RegisterOrderRoutes(router)
+	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
 
 	// This is just sample code.

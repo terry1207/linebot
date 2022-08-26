@@ -26,11 +26,12 @@ var Config struct {
 }
 
 func init() {
-	y, err := ioutil.ReadFile("./config/database.yml")
+	y, err := ioutil.ReadFile("./internal/config/database.yml")
 	if err != nil {
 		panic(err)
 	}
 	yaml.Unmarshal(y, &Config)
+	LoadServer()
 }
 
 func LoadServer() {

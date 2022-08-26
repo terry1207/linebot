@@ -24,12 +24,13 @@ func init() {
 	dbConfig := config.Config.DB
 	if config.Config.DB.Adapter == "mysql" {
 		dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?parseTime=True&loc=Local", dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.Name)
+		fmt.Println("dsn:", dsn)
+
 		DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	} else if config.Config.DB.Adapter == "postgres" {
 
 		dsn := fmt.Sprintf("postgres://%v:%v@%v/%v", dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Name)
 		fmt.Println("dsn:", dsn)
-		fmt.Println("dsn:", os.Getenv("DATABASE_URL"))
 
 		DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	}

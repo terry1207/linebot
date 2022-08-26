@@ -1,8 +1,9 @@
 package main
 
 import (
-	"linebot/config"
-
+	"fmt"
+	"linebot/internal/config"
+	_ "linebot/internal/config/db/Migrations"
 	"linebot/internal/route"
 
 	_ "github.com/lib/pq"
@@ -13,7 +14,7 @@ func main() {
 	//db.InitDbContext()
 
 	ginroute := route.InitRouter()
-
+	fmt.Printf("Address: http://localhost:%s/ \n", config.HttpPort)
 	ginroute.Run(":" + config.HttpPort)
 
 	//first page
