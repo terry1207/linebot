@@ -78,6 +78,8 @@ func CampReply(c *gin.Context) {
 							ImageAspectRatio: "rectangle",
 							ImageSize:        "cover",
 						})).Do()
+				default:
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("yoyo"))
 				}
 			}
 		}
