@@ -25,7 +25,7 @@ func InitRouter() *gin.Engine {
 	})
 	router.GET("/repeat", line.RepeatHandler)
 
-	router.Any("/callback", line.CampReply)
+	router.Any("/callback", line.ReplyMessage)
 
 	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
 		req, _ := c.Get("email")
