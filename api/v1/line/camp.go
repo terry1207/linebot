@@ -107,7 +107,7 @@ func CampReply(c *gin.Context) {
 
 func Add_Carousel_Imgae() (c_i []*linebot.ImageCarouselColumn) {
 	c1 := linebot.ImageCarouselColumn{
-		ImageURL: "./imgae/1.jpg",
+		ImageURL: "https://example.com/bot/images/item1.jpg",
 		Action: &linebot.PostbackAction{
 			Label:       "A區",
 			Text:        "5m*5m",
