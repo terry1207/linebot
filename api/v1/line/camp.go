@@ -62,7 +62,7 @@ func Add_Carousel_Imgae() (c_i []*linebot.ImageCarouselColumn) {
 			InputOption: linebot.InputOptionOpenRichMenu,
 		},
 	}
-	c_i = append(c_i, &c1, &c2)
+	c_i = append(c_i, &c2, &c1)
 	return c_i
 }
 
