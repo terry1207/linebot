@@ -28,7 +28,7 @@ func CampReply(c *gin.Context) {
 
 				switch {
 				case text_trimspace == "我要訂營地!":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("image_carousel",
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img_carousel",
 						&linebot.ImageCarouselTemplate{
 							Columns: Add_Carousel_Imgae(),
 						},
@@ -62,7 +62,7 @@ func Add_Carousel_Imgae() (c_i []*linebot.ImageCarouselColumn) {
 			InputOption: linebot.InputOptionOpenRichMenu,
 		},
 	}
-	c_i = append(c_i, &c1, &c2)
+	c_i = append(c_i, &c2, &c1)
 	return c_i
 }
 
