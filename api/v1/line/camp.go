@@ -28,11 +28,74 @@ func CampReply(c *gin.Context) {
 
 				switch {
 				case text_trimspace == "我要訂營地!":
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
+						&linebot.CarouselTemplate{
+							Columns:          Add_Carousel_Template(),
+							ImageAspectRatio: "rectangle",
+							ImageSize:        "cover",
+						},
+					)).Do()
+				case text_trimspace == "img":
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img_carousel",
 						&linebot.ImageCarouselTemplate{
 							Columns: Add_Carousel_Imgae(),
 						},
 					)).Do()
+				case text_trimspace == "car":
+					column1 := linebot.CarouselColumn{
+						ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
+						ImageBackgroundColor: "#FFFFFF",
+						Title:                "this is menu",
+						Text:                 "description",
+						DefaultAction: &linebot.URIAction{
+							Label: "View detail",
+							URI:   "./imgae/1.jpg",
+						},
+						Actions: []linebot.TemplateAction{
+							&linebot.PostbackAction{
+								Label: "Buy",
+								Data:  "action=buy&itemid=111",
+							},
+							&linebot.PostbackAction{
+								Label: "Add to chart",
+								Data:  "action=buy&itemid=111",
+							},
+							&linebot.URIAction{
+								Label: "View detail",
+								URI:   "http://example.com/page/111",
+							},
+						},
+					}
+					column2 := linebot.CarouselColumn{
+						ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
+						ImageBackgroundColor: "#000000",
+						Title:                "this is menu",
+						Text:                 "description",
+						DefaultAction: &linebot.URIAction{
+							Label: "View detail",
+							URI:   "http://example.com/page/222",
+						},
+						Actions: []linebot.TemplateAction{
+							&linebot.PostbackAction{
+								Label: "Buy",
+								Data:  "action=buy&itemid=222",
+							},
+							&linebot.PostbackAction{
+								Label: "Add to chart",
+								Data:  "action=buy&itemid=222",
+							},
+							&linebot.URIAction{
+								Label: "View detail",
+								URI:   "http://example.com/page/222",
+							},
+						},
+					}
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
+						&linebot.CarouselTemplate{
+							Columns:          []*linebot.CarouselColumn{&column1, &column2},
+							ImageAspectRatio: "rectangle",
+							ImageSize:        "cover",
+						})).Do()
 				default:
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
 				}
