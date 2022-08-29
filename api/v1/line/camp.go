@@ -27,62 +27,12 @@ func CampReply(c *gin.Context) {
 				text_trimspace := strings.TrimSpace(message.Text)
 
 				switch {
-				case text_trimspace == "我要訂營地！":
-
-					column1 := linebot.CarouselColumn{
-						ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
-						ImageBackgroundColor: "#FFFFFF",
-						Title:                "this is menu",
-						Text:                 "description",
-						DefaultAction: &linebot.URIAction{
-							Label: "View detail",
-							URI:   "http://example.com/page/123",
+				case text_trimspace == "我要訂營地!":
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("image_carousel",
+						&linebot.ImageCarouselTemplate{
+							Columns: Add_Carousel_Imgae(),
 						},
-						Actions: []linebot.TemplateAction{
-							&linebot.PostbackAction{
-								Label: "Buy",
-								Data:  "action=buy&itemid=111",
-							},
-							&linebot.PostbackAction{
-								Label: "Add to chart",
-								Data:  "action=buy&itemid=111",
-							},
-							&linebot.URIAction{
-								Label: "View detail",
-								URI:   "http://example.com/page/111",
-							},
-						},
-					}
-					column2 := linebot.CarouselColumn{
-						ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
-						ImageBackgroundColor: "#000000",
-						Title:                "this is menu",
-						Text:                 "description",
-						DefaultAction: &linebot.URIAction{
-							Label: "View detail",
-							URI:   "http://example.com/page/222",
-						},
-						Actions: []linebot.TemplateAction{
-							&linebot.PostbackAction{
-								Label: "Buy",
-								Data:  "action=buy&itemid=222",
-							},
-							&linebot.PostbackAction{
-								Label: "Add to chart",
-								Data:  "action=buy&itemid=222",
-							},
-							&linebot.URIAction{
-								Label: "View detail",
-								URI:   "http://example.com/page/222",
-							},
-						},
-					}
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
-						&linebot.CarouselTemplate{
-							Columns:          []*linebot.CarouselColumn{&column1, &column2},
-							ImageAspectRatio: "rectangle",
-							ImageSize:        "cover",
-						})).Do()
+					)).Do()
 				default:
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
 				}
@@ -90,4 +40,78 @@ func CampReply(c *gin.Context) {
 		}
 	}
 
+}
+
+func Add_Carousel_Imgae() (c_i []*linebot.ImageCarouselColumn) {
+	c1 := linebot.ImageCarouselColumn{
+		ImageURL: "./imgae/1.jpg",
+		Action: &linebot.PostbackAction{
+			Label:       "A區",
+			Text:        "5m*5m",
+			Data:        "action=click&itemid=0",
+			InputOption: linebot.InputOptionOpenRichMenu,
+		},
+	}
+
+	c2 := linebot.ImageCarouselColumn{
+		ImageURL: "https://example.com/bot/images/item1.jpg",
+		Action: &linebot.PostbackAction{
+			Label:       "B區",
+			Text:        "5m*5m",
+			Data:        "action=click&itemid=1",
+			InputOption: linebot.InputOptionOpenRichMenu,
+		},
+	}
+	c_i = append(c_i, &c1, &c2)
+	return c_i
+}
+
+func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
+
+	column1 := linebot.CarouselColumn{
+		ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
+		ImageBackgroundColor: "#FFFFFF",
+		Title:                "A區",
+		Text:                 "5m*5m",
+		DefaultAction: &linebot.URIAction{
+			Label: "View detail",
+			URI:   "http://example.com/page/123",
+		},
+		Actions: []linebot.TemplateAction{
+
+			&linebot.URIAction{
+				Label: "詳細資訊",
+				URI:   "http://example.com/page/111",
+			},
+		},
+	}
+
+	column2 := linebot.CarouselColumn{
+		ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
+		ImageBackgroundColor: "#000000",
+		Title:                "this is menu",
+		Text:                 "description",
+		DefaultAction: &linebot.URIAction{
+			Label: "View detail",
+			URI:   "http://example.com/page/222",
+		},
+		Actions: []linebot.TemplateAction{
+			&linebot.PostbackAction{
+				Label: "Buy",
+				Data:  "action=buy&itemid=222",
+			},
+			&linebot.PostbackAction{
+				Label: "Add to chart",
+				Data:  "action=buy&itemid=222",
+			},
+			&linebot.URIAction{
+				Label: "View detail",
+				URI:   "http://example.com/page/222",
+			},
+		},
+	}
+
+	c_t = append(c_t, &column1, &column2)
+
+	return c_t
 }

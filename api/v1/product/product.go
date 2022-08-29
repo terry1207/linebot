@@ -70,3 +70,17 @@ func DeleteProduct(c *gin.Context) {
 	}
 	c.JSON(200, product)
 }
+
+func UploadImage(c *gin.Context) {
+
+	file, _ := c.FormFile("file")
+
+	//filename := file.Filename
+	filename := "test.png"
+	if err := c.SaveUploadedFile(file, "./image/"+filename); err != nil {
+
+		//自己完成信息提示
+		return
+	}
+	c.String(200, "Success")
+}

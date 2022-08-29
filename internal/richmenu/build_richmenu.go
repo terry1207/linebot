@@ -30,11 +30,11 @@ func Build_RichMenu() {
 		DeleteRichMenuAlias(bot, aid_B)
 	}
 
-	Richmenu_Id_A := CreatRichMenu_A(bot, aid_B)
+	//Richmenu_Id_A := CreatRichMenu_A(bot, aid_B)
 
-	img_path_A := "./internal/richmenu/img/img_A.png"
+	//img_path_A := "./internal/richmenu/img/img_A.png"
 
-	Upload_Img(bot, Richmenu_Id_A, img_path_A)
+	//Upload_Img(bot, Richmenu_Id_A, img_path_A)
 
 	Richmenu_Id_B := CreatRichMenu_B(bot, aid_A)
 
@@ -42,10 +42,10 @@ func Build_RichMenu() {
 
 	Upload_Img(bot, Richmenu_Id_B, img_path_B)
 
-	Set_Default(bot, Richmenu_Id_A)
+	Set_Default(bot, Richmenu_Id_B)
 
-	CreateRichMenuAlias(bot, aid_A, Richmenu_Id_A)
-	CreateRichMenuAlias(bot, aid_B, Richmenu_Id_B)
+	//CreateRichMenuAlias(bot, aid_A, Richmenu_Id_A)
+	//CreateRichMenuAlias(bot, aid_B, Richmenu_Id_B)
 
 }
 
@@ -109,31 +109,31 @@ func CreatRichMenu_B(bot *linebot.Client, aid string) string {
 		Name:        "richmenu-b",
 		ChatBarText: "選單B",
 		Areas: []linebot.AreaDetail{
-			{
-				Bounds: linebot.RichMenuBounds{X: 1251, Y: 0, Width: 1200, Height: 235},
-				Action: linebot.RichMenuAction{
-					Type:            linebot.RichMenuActionTypeRichMenuSwitch,
-					RichMenuAliasID: aid,
-					Data:            "action=richmenu-changed-to-a",
-				},
-				// Action: linebot.RichMenuAction{
-				// 	Type: linebot.RichMenuActionTypeMessage,
-				// 	Text: "切換至A",
-				// },
-			},
+			//{
+			// 	Bounds: linebot.RichMenuBounds{X: 1251, Y: 0, Width: 1200, Height: 235},
+			// 	Action: linebot.RichMenuAction{
+			// 		Type:            linebot.RichMenuActionTypeRichMenuSwitch,
+			// 		RichMenuAliasID: aid,
+			// 		Data:            "action=richmenu-changed-to-a",
+			// 	},
+			// 	// Action: linebot.RichMenuAction{
+			// 	// 	Type: linebot.RichMenuActionTypeMessage,
+			// 	// 	Text: "切換至A",
+			// 	// },
+			// },
 			{
 				Bounds: linebot.RichMenuBounds{X: 0, Y: 234, Width: 833, Height: 553},
 				Action: linebot.RichMenuAction{
 					Type: linebot.RichMenuActionTypeMessage,
-					Text: "歲末驚喜1",
+					Text: "我要訂營地!",
 				},
 			},
 
 			{
 				Bounds: linebot.RichMenuBounds{X: 833, Y: 235, Width: 833, Height: 553},
 				Action: linebot.RichMenuAction{
-					Type: linebot.RichMenuActionTypeMessage,
-					Text: "最新消息",
+					Type: linebot.RichMenuActionTypeURI,
+					URI:  "https://www.harpersbazaar.com/tw/life/trips/g33228687/taiwan-camping-places/",
 				},
 			},
 			{
