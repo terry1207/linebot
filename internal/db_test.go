@@ -3,7 +3,7 @@ package internal
 import (
 	"fmt"
 	"linebot/internal/config"
-	_ "linebot/internal/config/db/Migrations"
+	_ "linebot/internal/config/db/migrate"
 	"testing"
 )
 

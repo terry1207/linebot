@@ -1,4 +1,4 @@
-package Migrations
+package migrate
 
 import (
 	"linebot/internal/config/db"
@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	// //DropTable(&product.Product{})
+	DropTable(&order.Order{}, &order.OrderItem{}, &product.Product{}, &product.Price{}, &account.Account{})
 	// // AutoMigrate(&product.Product{})
 	// DB.Migrator().CreateConstraint(&order.Order{}, "OrderItem")
 	AutoMigrate(&order.Order{}, &order.OrderItem{})

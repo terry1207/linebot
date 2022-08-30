@@ -3,6 +3,7 @@ package product
 import (
 	"linebot/internal/config/db"
 
+	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -11,7 +12,7 @@ type Product struct {
 	CampRoundName string `gorm:"not null"`
 	Price         Price  `gorm:"embedded"`
 	Size          string
-	ImageUri      []string
+	ImageUri      pq.StringArray `gorm:"type:text[]"`
 	Description   string
 }
 
