@@ -36,14 +36,25 @@ func CampReply(c *gin.Context) {
 				switch {
 
 				case text_trimspace == "我要訂營地!":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img_carousel",
 						&linebot.ImageCarouselTemplate{
 							Columns: Add_Carousel_Imgae(),
 						},
 					)).Do()
 				case text_trimspace == "營地介紹":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("選擇分區").WithQuickReplies(Quick_Reply_CampRoundName())).Do()
+					tmp := Quick_Reply_CampRoundName()
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("選擇分區").WithQuickReplies(tmp)).Do()
 				case text_trimspace == "car":
+					col := Add_Carousel_Template()
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
+						&linebot.CarouselTemplate{
+							Columns:          col,
+							ImageAspectRatio: "rectangle",
+							ImageSize:        "cover",
+						},
+					)).Do()
+				case text_trimspace == "car1":
+
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
 						&linebot.CarouselTemplate{
 							Columns:          Add_Carousel_Template(),
@@ -51,6 +62,61 @@ func CampReply(c *gin.Context) {
 							ImageSize:        "cover",
 						},
 					)).Do()
+				case text_trimspace == "car2":
+					column1 := linebot.CarouselColumn{
+						ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
+						ImageBackgroundColor: "#FFFFFF",
+						Title:                "this is menu",
+						Text:                 "description",
+						DefaultAction: &linebot.URIAction{
+							Label: "View detail",
+							URI:   "http://example.com/page/123",
+						},
+						Actions: []linebot.TemplateAction{
+							&linebot.PostbackAction{
+								Label: "Buy",
+								Data:  "action=buy&itemid=111",
+							},
+							&linebot.PostbackAction{
+								Label: "Add to chart",
+								Data:  "action=buy&itemid=111",
+							},
+							&linebot.URIAction{
+								Label: "View detail",
+								URI:   "http://example.com/page/111",
+							},
+						},
+					}
+					column2 := linebot.CarouselColumn{
+						ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
+						ImageBackgroundColor: "#000000",
+						Title:                "this is menu",
+						Text:                 "description",
+						DefaultAction: &linebot.URIAction{
+							Label: "View detail",
+							URI:   "http://example.com/page/222",
+						},
+						Actions: []linebot.TemplateAction{
+							&linebot.PostbackAction{
+								Label: "Buy",
+								Data:  "action=buy&itemid=222",
+							},
+							&linebot.PostbackAction{
+								Label: "Add to chart",
+								Data:  "action=buy&itemid=222",
+							},
+							&linebot.URIAction{
+								Label: "View detail",
+								URI:   "http://example.com/page/222",
+							},
+						},
+					}
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
+						&linebot.CarouselTemplate{
+							Columns:          []*linebot.CarouselColumn{&column1, &column2},
+							ImageAspectRatio: "rectangle",
+							ImageSize:        "cover",
+						})).Do()
 				default:
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
 				}
@@ -62,6 +128,7 @@ func CampReply(c *gin.Context) {
 
 //快速回覆營位分區名稱
 func Quick_Reply_CampRoundName() (q_p *linebot.QuickReplyItems) {
+	fmt.Println("Quick_Reply_CampRoundName")
 	products, _ := product.GetAll()
 	for _, p := range products {
 		tmp := &linebot.QuickReplyButton{
@@ -122,19 +189,25 @@ func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
 			URI:   "http://example.com/page/123",
 		},
 		Actions: []linebot.TemplateAction{
-
+			&linebot.PostbackAction{
+				Label: "Buy",
+				Data:  "action=buy&itemid=111",
+			},
+			&linebot.PostbackAction{
+				Label: "Add to chart",
+				Data:  "action=buy&itemid=111",
+			},
 			&linebot.URIAction{
-				Label: "詳細資訊",
+				Label: "View detail",
 				URI:   "http://example.com/page/111",
 			},
 		},
 	}
-
 	column2 := linebot.CarouselColumn{
 		ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
 		ImageBackgroundColor: "#000000",
-		Title:                "this is menu",
-		Text:                 "description",
+		Title:                "A區",
+		Text:                 "5m*5m",
 		DefaultAction: &linebot.URIAction{
 			Label: "View detail",
 			URI:   "http://example.com/page/222",
@@ -154,7 +227,6 @@ func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
 			},
 		},
 	}
-
 	c_t = append(c_t, &column1, &column2)
 
 	return c_t
