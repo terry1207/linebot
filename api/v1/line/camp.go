@@ -33,7 +33,7 @@ func CampReply(c *gin.Context) {
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
 						&linebot.ImageCarouselTemplate{
 							Columns: tmp,
-						}))
+						})).Do()
 				}
 
 				switch {
