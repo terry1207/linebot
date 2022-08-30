@@ -11,7 +11,7 @@ type Product struct {
 	CampRoundName string `gorm:"not null"`
 	Price         Price  `gorm:"embedded"`
 	Size          string
-	Image         int
+	ImageUri      []string
 	Description   string
 }
 

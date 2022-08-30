@@ -74,10 +74,11 @@ func DeleteProduct(c *gin.Context) {
 func UploadImage(c *gin.Context) {
 
 	file, _ := c.FormFile("file")
+	name := c.PostForm("user_id")
 
 	//filename := file.Filename
-	filename := "test.png"
-	if err := c.SaveUploadedFile(file, "./image/"+filename); err != nil {
+	filename := name + ".png"
+	if err := c.SaveUploadedFile(file, "/Users/zh/ImageServer/"+filename); err != nil {
 
 		//自己完成信息提示
 		return
