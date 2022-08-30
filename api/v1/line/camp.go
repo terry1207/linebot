@@ -27,12 +27,15 @@ func CampReply(c *gin.Context) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				text_trimspace := strings.TrimSpace(message.Text)
-				// if product, ok := Is_Name_Exist(text_trimspace); ok {
-				// 	bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
-				// 		&linebot.ImageCarouselTemplate{
-				// 			Columns: Img_Carousel_CampRound_Info(product),
-				// 		}))
-				// }
+
+				if product, ok := Is_Name_Exist(text_trimspace); ok {
+					tmp := Img_Carousel_CampRound_Info(product)
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
+						&linebot.ImageCarouselTemplate{
+							Columns: tmp,
+						}))
+				}
+
 				switch {
 
 				case text_trimspace == "我要訂營地!":
@@ -43,80 +46,10 @@ func CampReply(c *gin.Context) {
 					)).Do()
 				case text_trimspace == "營地介紹":
 					tmp := Quick_Reply_CampRoundName()
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("選擇分區").WithQuickReplies(tmp)).Do()
-				case text_trimspace == "car":
-					col := Add_Carousel_Template()
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
-						&linebot.CarouselTemplate{
-							Columns:          col,
-							ImageAspectRatio: "rectangle",
-							ImageSize:        "cover",
-						},
-					)).Do()
-				case text_trimspace == "car1":
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("選擇分區").WithQuickReplies(&linebot.QuickReplyItems{
+						Items: tmp,
+					})).Do()
 
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
-						&linebot.CarouselTemplate{
-							Columns:          Add_Carousel_Template(),
-							ImageAspectRatio: "rectangle",
-							ImageSize:        "cover",
-						},
-					)).Do()
-				case text_trimspace == "car2":
-					column1 := linebot.CarouselColumn{
-						ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
-						ImageBackgroundColor: "#FFFFFF",
-						Title:                "this is menu",
-						Text:                 "description",
-						DefaultAction: &linebot.URIAction{
-							Label: "View detail",
-							URI:   "http://example.com/page/123",
-						},
-						Actions: []linebot.TemplateAction{
-							&linebot.PostbackAction{
-								Label: "Buy",
-								Data:  "action=buy&itemid=111",
-							},
-							&linebot.PostbackAction{
-								Label: "Add to chart",
-								Data:  "action=buy&itemid=111",
-							},
-							&linebot.URIAction{
-								Label: "View detail",
-								URI:   "http://example.com/page/111",
-							},
-						},
-					}
-					column2 := linebot.CarouselColumn{
-						ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
-						ImageBackgroundColor: "#000000",
-						Title:                "this is menu",
-						Text:                 "description",
-						DefaultAction: &linebot.URIAction{
-							Label: "View detail",
-							URI:   "http://example.com/page/222",
-						},
-						Actions: []linebot.TemplateAction{
-							&linebot.PostbackAction{
-								Label: "Buy",
-								Data:  "action=buy&itemid=222",
-							},
-							&linebot.PostbackAction{
-								Label: "Add to chart",
-								Data:  "action=buy&itemid=222",
-							},
-							&linebot.URIAction{
-								Label: "View detail",
-								URI:   "http://example.com/page/222",
-							},
-						},
-					}
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
-						&linebot.CarouselTemplate{
-							Columns:          []*linebot.CarouselColumn{&column1, &column2},
-							ImageAspectRatio: "rectangle",
-							ImageSize:        "cover",
-						})).Do()
 				default:
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
 				}
@@ -127,7 +60,7 @@ func CampReply(c *gin.Context) {
 }
 
 //快速回覆營位分區名稱
-func Quick_Reply_CampRoundName() (q_p *linebot.QuickReplyItems) {
+func Quick_Reply_CampRoundName() (q_p []*linebot.QuickReplyButton) {
 	fmt.Println("Quick_Reply_CampRoundName")
 	products, _ := product.GetAll()
 	for _, p := range products {
@@ -137,7 +70,7 @@ func Quick_Reply_CampRoundName() (q_p *linebot.QuickReplyItems) {
 				Text:  p.CampRoundName,
 			},
 		}
-		q_p.Items = append(q_p.Items, tmp)
+		q_p = append(q_p, tmp)
 	}
 	fmt.Println("Quick_Reply_CampRoundName", q_p)
 	return q_p
@@ -156,25 +89,6 @@ func Is_Name_Exist(name string) (product.Product, bool) {
 		}
 	}
 	return tmp, false
-}
-func Add_Carousel_Imgae() (c_i []*linebot.ImageCarouselColumn) {
-	c1 := linebot.ImageCarouselColumn{
-		ImageURL: "https://example.com/bot/images/item1.jpg",
-		Action: &linebot.PostbackAction{
-			Label: "A區",
-			Data:  "action=click&itemid=0",
-		},
-	}
-
-	c2 := linebot.ImageCarouselColumn{
-		ImageURL: "https://example.com/bot/images/item1.jpg",
-		Action: &linebot.PostbackAction{
-			Label: "B區",
-			Data:  "action=click&itemid=1",
-		},
-	}
-	c_i = append(c_i, &c1, &c2)
-	return c_i
 }
 
 func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
@@ -232,7 +146,28 @@ func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
 	return c_t
 }
 
+func Add_Carousel_Imgae() (c_i []*linebot.ImageCarouselColumn) {
+	c1 := linebot.ImageCarouselColumn{
+		ImageURL: "https://example.com/bot/images/item1.jpg",
+		Action: &linebot.PostbackAction{
+			Label: "A區",
+			Data:  "action=click&itemid=0",
+		},
+	}
+
+	c2 := linebot.ImageCarouselColumn{
+		ImageURL: "https://example.com/bot/images/item1.jpg",
+		Action: &linebot.PostbackAction{
+			Label: "B區",
+			Data:  "action=click&itemid=1",
+		},
+	}
+	c_i = append(c_i, &c1, &c2)
+	return c_i
+}
+
 func Img_Carousel_CampRound_Info(product product.Product) (c_t []*linebot.ImageCarouselColumn) {
+	fmt.Println("Img_Carousel_CampRound_Info", product)
 	for _, uri := range product.ImageUri {
 		fmt.Println("Img_Carousel_CampRound_Info : URI :", uri)
 		c1 := linebot.ImageCarouselColumn{
