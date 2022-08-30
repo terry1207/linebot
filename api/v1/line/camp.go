@@ -27,12 +27,12 @@ func CampReply(c *gin.Context) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				text_trimspace := strings.TrimSpace(message.Text)
-				if product, ok := Is_Name_Exist(text_trimspace); ok {
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
-						&linebot.ImageCarouselTemplate{
-							Columns: Img_Carousel_CampRound_Info(product),
-						}))
-				}
+				// if product, ok := Is_Name_Exist(text_trimspace); ok {
+				// 	bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
+				// 		&linebot.ImageCarouselTemplate{
+				// 			Columns: Img_Carousel_CampRound_Info(product),
+				// 		}))
+				// }
 				switch {
 
 				case text_trimspace == "我要訂營地!":
@@ -44,7 +44,7 @@ func CampReply(c *gin.Context) {
 				case text_trimspace == "營地介紹":
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("選擇分區").WithQuickReplies(Quick_Reply_CampRoundName())).Do()
 				case text_trimspace == "car":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img carousel",
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("carousel template",
 						&linebot.CarouselTemplate{
 							Columns:          Add_Carousel_Template(),
 							ImageAspectRatio: "rectangle",
