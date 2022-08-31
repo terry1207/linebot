@@ -14,14 +14,14 @@ var (
 )
 
 var Config struct {
-	Port uint `default:"5000" env:"PORT"`
+	Port uint
 	DB   struct {
-		Name     string `env:"DBName" default:"example"`
-		Adapter  string `env:"DBAdapter" default:"mysql"`
-		Host     string `env:"DBHost" default:"localhost"`
-		Port     string `env:"DBPort" default:"3306"`
-		User     string `env:"DBUser"`
-		Password string `env:"DBPassword"`
+		Name     string
+		Adapter  string
+		Host     string
+		Port     string
+		User     string
+		Password string
 	}
 }
 
