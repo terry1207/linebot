@@ -9,7 +9,7 @@ import (
 
 //新建帳戶
 func Add(product *product.Product) error {
-	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
+	return db.BeginTransaction(db.DB, func(tx *gorm.DB) error {
 		return tx.Create(&product).Error
 	})
 }

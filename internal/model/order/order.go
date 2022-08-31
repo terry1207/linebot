@@ -15,8 +15,8 @@ type Order struct {
 	Email       string `gorm:"comment:登記者email"`
 }
 
-func (order *Order) Add() error {
-	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
+func (order Order) Add() error {
+	return db.BeginTransaction(db.DB, func(tx *gorm.DB) error {
 		return tx.Create(&order).Error
 	})
 }

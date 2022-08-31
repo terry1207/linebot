@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"linebot/internal/model/product"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/line/line-bot-sdk-go/v7/linebot"
@@ -39,22 +40,33 @@ func CampReply(c *gin.Context) {
 				switch {
 
 				case text_trimspace == "我要訂營地!":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("img_carousel",
-						&linebot.ImageCarouselTemplate{
-							Columns: Add_Carousel_Imgae(),
-						},
-					)).Do()
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇時間區間",
+						linebot.NewDatetimePickerAction("起始時間", "action=order&item=0&type=start", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
+						linebot.NewDatetimePickerAction("結束時間", "action=order&item=0&type=end", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
+					))).Do()
+
 				case text_trimspace == "營地介紹":
 					tmp := Quick_Reply_CampRoundName()
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("選擇分區").WithQuickReplies(&linebot.QuickReplyItems{
 						Items: tmp,
 					})).Do()
 
-				default:
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
+					// default:
+					// 	bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(text_trimspace)).Do()
+					// }
 				}
 			}
 		}
+	}
+	var mes string
+	var dat string
+	for _, event := range events {
+		fmt.Println("data", event.Postback.Data)
+		fmt.Println("params", event.Postback.Params.Date)
+		mes += event.Postback.Data
+		dat += event.Postback.Params.Date
+		fmt.Println("mes", mes)
+		fmt.Println("dat", dat)
 	}
 
 }
@@ -100,27 +112,19 @@ func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
 		Text:                 "5m*5m",
 		DefaultAction: &linebot.URIAction{
 			Label: "View detail",
-			URI:   "http://example.com/page/123",
+			URI:   "https://i.imgur.com/XXwY96T.jpeg",
 		},
 		Actions: []linebot.TemplateAction{
 			&linebot.PostbackAction{
-				Label: "Buy",
-				Data:  "action=buy&itemid=111",
-			},
-			&linebot.PostbackAction{
-				Label: "Add to chart",
-				Data:  "action=buy&itemid=111",
-			},
-			&linebot.URIAction{
-				Label: "View detail",
-				URI:   "http://example.com/page/111",
+				Label: "訂位",
+				Data:  "action=order&itemid=1",
 			},
 		},
 	}
 	column2 := linebot.CarouselColumn{
-		ThumbnailImageURL:    "https://example.com/bot/images/item2.jpg",
+		ThumbnailImageURL:    "https://i.imgur.com/3dthZKo.jpeg",
 		ImageBackgroundColor: "#000000",
-		Title:                "A區",
+		Title:                "B區",
 		Text:                 "5m*5m",
 		DefaultAction: &linebot.URIAction{
 			Label: "View detail",
@@ -128,16 +132,8 @@ func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
 		},
 		Actions: []linebot.TemplateAction{
 			&linebot.PostbackAction{
-				Label: "Buy",
-				Data:  "action=buy&itemid=222",
-			},
-			&linebot.PostbackAction{
-				Label: "Add to chart",
-				Data:  "action=buy&itemid=222",
-			},
-			&linebot.URIAction{
-				Label: "View detail",
-				URI:   "http://example.com/page/222",
+				Label: "訂位",
+				Data:  "action=order&itemid=1",
 			},
 		},
 	}

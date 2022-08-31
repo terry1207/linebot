@@ -16,8 +16,8 @@ type Product struct {
 	Description   string
 }
 
-func (product *Product) Add() error {
-	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
+func (product Product) Add() error {
+	return db.BeginTransaction(db.DB, func(tx *gorm.DB) error {
 		return tx.Create(&product).Error
 	})
 }

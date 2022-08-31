@@ -140,7 +140,7 @@ func CreatRichMenu_B(bot *linebot.Client, aid string) string {
 				Bounds: linebot.RichMenuBounds{X: 1666, Y: 235, Width: 833, Height: 553},
 				Action: linebot.RichMenuAction{
 					Type: linebot.RichMenuActionTypeMessage,
-					Text: "營地介紹",
+					Text: "熱銷必敗",
 				},
 			},
 			{

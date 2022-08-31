@@ -23,7 +23,7 @@ func CreateAccount(c *gin.Context) {
 	new_account.CreatedAt = time.Now()
 	new_account.UpdatedAt = time.Now()
 
-	err = account.Add(&new_account)
+	err = new_account.Add()
 	if err != nil {
 		response.Response(c, errmsg.ERROR)
 		return

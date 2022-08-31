@@ -48,7 +48,7 @@ func init() {
 	// _ = DB.AutoMigrate(&model.Camp{}, &model.Account{}, &model.Tag{}, &model.TagMap{})
 }
 
-func BeginTranscation(DB *gorm.DB, process func(tx *gorm.DB) error) error {
+func BeginTransaction(DB *gorm.DB, process func(tx *gorm.DB) error) error {
 	tx := DB.Begin()
 
 	defer func() {

@@ -19,15 +19,15 @@ type OrderItem struct {
 	Checkout     time.Time
 }
 
-func (orderitem *OrderItem) Add() error {
-	return db.BeginTranscation(db.DB, func(tx *gorm.DB) error {
+func (orderitem OrderItem) Add() error {
+	return db.BeginTransaction(db.DB, func(tx *gorm.DB) error {
 		return tx.Create(&orderitem).Error
 	})
 }
 
 func GetOrderItemByOrderSN(order_sn string) (OrderItem, error) {
 	var GetOrderItem OrderItem
-	err := db.DB.Where("order_sn=?", order_sn).Find(&GetOrderItem).Error
+	err := db.DB.Where("order_sn<>?", order_sn).Find(&GetOrderItem).Error
 	return GetOrderItem, err
 }
 
