@@ -3,6 +3,7 @@ package line
 import (
 	"fmt"
 	"linebot/internal/model/product"
+	"strconv"
 	"strings"
 	"time"
 
@@ -40,10 +41,6 @@ func CampReply(c *gin.Context) {
 				switch {
 
 				case text_trimspace == "我要訂營地!":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇時間區間",
-						linebot.NewDatetimePickerAction("起始時間", "action=order&item=0&type=start", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
-						linebot.NewDatetimePickerAction("結束時間", "action=order&item=0&type=end", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
-					))).Do()
 
 				case text_trimspace == "營地介紹":
 					tmp := Quick_Reply_CampRoundName()
@@ -57,16 +54,29 @@ func CampReply(c *gin.Context) {
 				}
 			}
 		}
-	}
-	var mes string
-	var dat string
-	for _, event := range events {
-		fmt.Println("data", event.Postback.Data)
-		fmt.Println("params", event.Postback.Params.Date)
-		mes += event.Postback.Data
-		dat += event.Postback.Params.Date
-		fmt.Println("mes", mes)
-		fmt.Println("dat", dat)
+
+		if event.Type == linebot.EventTypePostback {
+			data := Parase_postback(event.Postback.Data)
+			switch data.Action {
+			case "search":
+				switch data.Type {
+				case "go":
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇起始時間",
+						linebot.NewDatetimePickerAction("請選擇", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
+					))).Do()
+				case "get_start_time":
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇結束時間",
+						linebot.NewDatetimePickerAction("請選擇", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
+					))).Do()
+				case "get_end_time":
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(event.Postback.Params.Date)).Do()
+
+				}
+
+			}
+			fmt.Println("data", event.Postback.Data)
+
+		}
 	}
 
 }
@@ -177,4 +187,33 @@ func Img_Carousel_CampRound_Info(product product.Product) (c_t []*linebot.ImageC
 		c_t = append(c_t, &c1)
 	}
 	return c_t
+}
+
+type ParseData struct {
+	Action string
+	Item   int
+	Type   string
+}
+
+func Parase_postback(data string) (p_d ParseData) {
+	str := strings.Split(data, "&")
+
+	for _, p := range str {
+		switch {
+		case strings.Contains(p, "action"):
+			p_d.Action = get_string_data(p)
+		case strings.Contains(p, "item"):
+			p_d.Item, _ = strconv.Atoi(p)
+		case strings.Contains(p, "type"):
+			p_d.Type = get_string_data(p)
+		}
+	}
+	return p_d
+}
+
+func get_string_data(str string) string {
+	i := strings.Index(str, "=")
+	tmp := str[i+1:]
+	fmt.Println(tmp)
+	return tmp
 }
