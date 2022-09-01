@@ -88,6 +88,7 @@ func CampReply(c *gin.Context) {
 				case "get_start_time":
 					date := event.Postback.Params.Date
 					str := fmt.Sprintf("起始日期:%s", date)
+					fmt.Println(date)
 					value.Start, _ = time.Parse("2006-01-01", date)
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(str)).Do()
 				case "get_end_time":
@@ -95,7 +96,10 @@ func CampReply(c *gin.Context) {
 
 					str := fmt.Sprintf("結束日期:%s", date)
 					value.End, _ = time.Parse("2006-01-01", date)
-					fmt.Println(Search[event.Source.UserID])
+					fmt.Println(str)
+					fmt.Println("Start Time", Search[event.Source.UserID].Start)
+					fmt.Println("End Time", Search[event.Source.UserID].End)
+
 					delete(Search, event.Source.UserID)
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(str)).Do()
 
@@ -242,6 +246,5 @@ func Parase_postback(data string) (p_d ParseData) {
 func get_string_data(str string) string {
 	i := strings.Index(str, "=")
 	tmp := str[i+1:]
-	fmt.Println(tmp)
 	return tmp
 }
