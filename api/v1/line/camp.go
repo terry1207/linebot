@@ -82,20 +82,20 @@ func CampReply(c *gin.Context) {
 				switch data.Type {
 				case "go":
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇日期",
-						linebot.NewDatetimePickerAction("起始日期", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-01"), "", time.Now().Format("2006-01-01")),
-						linebot.NewDatetimePickerAction("結束日期", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-01"), "", time.Now().Format("2006-01-01")),
+						linebot.NewDatetimePickerAction("起始日期", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-02"), "", time.Now().Format("2006-01-01")),
+						linebot.NewDatetimePickerAction("結束日期", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-02"), "", time.Now().Format("2006-01-01")),
 					))).Do()
 				case "get_start_time":
 					date := event.Postback.Params.Date
 					str := fmt.Sprintf("起始日期:%s", date)
 					fmt.Println(date)
-					value.Start, _ = time.Parse("2006-01-01", date)
+					value.Start, _ = time.Parse("2006-01-02", date)
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(str)).Do()
 				case "get_end_time":
 					date := event.Postback.Params.Date
 
 					str := fmt.Sprintf("結束日期:%s", date)
-					value.End, _ = time.Parse("2006-01-01", date)
+					value.End, _ = time.Parse("2006-01-02", date)
 					fmt.Println(str)
 					fmt.Println("Start Time", Search[event.Source.UserID].Start)
 					fmt.Println("End Time", Search[event.Source.UserID].End)

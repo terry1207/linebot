@@ -161,8 +161,8 @@ func CreatRichMenu_B(bot *linebot.Client, aid string) string {
 			{
 				Bounds: linebot.RichMenuBounds{X: 1666, Y: 788, Width: 833, Height: 553},
 				Action: linebot.RichMenuAction{
-					Type: linebot.RichMenuActionTypeMessage,
-					Text: "推薦好友",
+					Type: linebot.RichMenuActionTypeURI,
+					URI:  "tel:0909990685",
 				},
 			},
 		},
