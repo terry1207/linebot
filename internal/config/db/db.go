@@ -14,7 +14,7 @@ import (
 var DB *gorm.DB
 var err error
 
-func Init() {
+func init() {
 	fmt.Println("初始化數據庫")
 	// DB, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	// if err != nil {

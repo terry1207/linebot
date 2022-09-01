@@ -7,7 +7,7 @@ import (
 	"linebot/internal/model/product"
 )
 
-func Init() {
+func init() {
 	DropTable(&order.Order{}, &order.OrderItem{}, &product.Product{}, &product.Price{}, &account.Account{})
 	// // AutoMigrate(&product.Product{})
 	// DB.Migrator().CreateConstraint(&order.Order{}, "OrderItem")

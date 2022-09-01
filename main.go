@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"linebot/api/v1/line"
+	"linebot/internal/config"
 	_ "linebot/internal/config/db/migrate"
 	"linebot/internal/model/product"
+	"linebot/internal/route"
 
 	_ "github.com/lib/pq"
 )
@@ -12,11 +13,11 @@ import (
 func main() {
 	//model.InitDbContext()
 	//db.InitDbContext()
-	line.Parase_postback("action=order&item=0&type=end")
-	// TestData()
-	// ginroute := route.InitRouter()
-	// fmt.Printf("Address: http://localhost:%s/ \n", config.HttpPort)
-	// ginroute.Run(":" + config.HttpPort)
+
+	TestData()
+	ginroute := route.InitRouter()
+	fmt.Printf("Address: http://localhost:%s/ \n", config.HttpPort)
+	ginroute.Run(":" + config.HttpPort)
 
 	//first page
 }
