@@ -82,8 +82,8 @@ func CampReply(c *gin.Context) {
 				switch data.Type {
 				case "go":
 					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇日期",
-						linebot.NewDatetimePickerAction("起始日期", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-02"), "", time.Now().Format("2006-01-01")),
-						linebot.NewDatetimePickerAction("結束日期", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-02"), "", time.Now().Format("2006-01-01")),
+						linebot.NewDatetimePickerAction("起始日期", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-02"), "", time.Now().Format("2006-01-02")),
+						linebot.NewDatetimePickerAction("結束日期", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-02"), "", time.Now().Format("2006-01-02")),
 					))).Do()
 				case "get_start_time":
 					date := event.Postback.Params.Date
