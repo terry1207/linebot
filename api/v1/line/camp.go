@@ -11,6 +11,22 @@ import (
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
+type Search_Time struct {
+	Start time.Time
+	End   time.Time
+}
+
+var Search map[string]*Search_Time
+
+func init() {
+	Search = make(map[string]*Search_Time)
+
+	fmt.Println("Init Search ", Search)
+
+	//richmenu.Build_RichMenu()
+
+}
+
 func CampReply(c *gin.Context) {
 	events, err := bot.ParseRequest(c.Request)
 
@@ -59,17 +75,27 @@ func CampReply(c *gin.Context) {
 			data := Parase_postback(event.Postback.Data)
 			switch data.Action {
 			case "search":
+				value, isExist := Search[event.Source.UserID]
+				if !isExist {
+					Search[event.Source.UserID] = &Search_Time{}
+				}
 				switch data.Type {
 				case "go":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇起始時間",
-						linebot.NewDatetimePickerAction("請選擇", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
+
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇日期",
+						linebot.NewDatetimePickerAction("起始日期", "action=search&type=get_start_time", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
+						linebot.NewDatetimePickerAction("結束日期", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
 					))).Do()
 				case "get_start_time":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("date range", linebot.NewButtonsTemplate("", "", "選擇結束時間",
-						linebot.NewDatetimePickerAction("請選擇", "action=search&type=get_end_time", "date", time.Now().Format("2006-01-01"), time.Now().Format("2006-01-01"), ""),
-					))).Do()
+					str := fmt.Sprintf("起始日期:%s", event.Postback.Params.Date)
+					value.Start, _ = time.Parse("2006-01-01", event.Postback.Params.Date)
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(str)).Do()
 				case "get_end_time":
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(event.Postback.Params.Date)).Do()
+					str := fmt.Sprintf("結束日期:%s", event.Postback.Params.Date)
+					value.End, _ = time.Parse("2006-01-01", event.Postback.Params.Date)
+					fmt.Println(Search[event.Source.UserID])
+					delete(Search, event.Source.UserID)
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(str)).Do()
 
 				}
 
