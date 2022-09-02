@@ -26,7 +26,6 @@ func RepeatHandler(c *gin.Context) {
 
 }
 
-var post bool
 var bot *linebot.Client
 var err error
 
