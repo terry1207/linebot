@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"gopkg.in/yaml.v2"
@@ -38,7 +37,7 @@ func LoadServer() {
 	HttpPort = os.Getenv("PORT")
 	//HttpPort = "5000"
 	if HttpPort == "" {
-		log.Fatal("$PORT must be set")
+		//log.Fatal("$PORT must be set")
 	} else {
 		fmt.Println("Port:", HttpPort)
 	}

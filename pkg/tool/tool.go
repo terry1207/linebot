@@ -44,3 +44,17 @@ func IsExist_in_Arr(ele interface{}, arr interface{}) bool {
 
 	return false
 }
+
+func Find_Min_and_Max(arr []int) (min, Max int) {
+	min = arr[0]
+	Max = arr[0]
+	for _, e := range arr {
+		if e < min {
+			min = e
+		}
+		if e > Max {
+			Max = e
+		}
+	}
+	return min, Max
+}

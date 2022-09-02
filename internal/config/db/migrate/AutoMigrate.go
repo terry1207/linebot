@@ -5,15 +5,17 @@ import (
 	"linebot/internal/model/account"
 	"linebot/internal/model/order"
 	"linebot/internal/model/product"
+	"linebot/internal/model/stock"
 )
 
 func init() {
-	DropTable(&order.Order{}, &order.OrderItem{}, &product.Product{}, &product.Price{}, &account.Account{})
+	DropTable(&order.Order{}, &order.OrderItem{}, &product.Product{}, &product.Price{}, &account.Account{}, &stock.Stock{})
 	// // AutoMigrate(&product.Product{})
 	// DB.Migrator().CreateConstraint(&order.Order{}, "OrderItem")
 	AutoMigrate(&order.Order{}, &order.OrderItem{})
 	AutoMigrate(&product.Product{}, &product.Price{})
 	AutoMigrate(&account.Account{})
+	AutoMigrate(&stock.Stock{})
 }
 
 // AutoMigrate run auto migration

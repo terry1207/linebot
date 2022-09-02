@@ -101,7 +101,13 @@ func CampReply(c *gin.Context) {
 					fmt.Println("End Time", Search[event.Source.UserID].End)
 
 					delete(Search, event.Source.UserID)
-					bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(str)).Do()
+					bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("camp search",
+						&linebot.CarouselTemplate{
+							Columns:          Camp_Search_Remain(*value),
+							ImageAspectRatio: "rectangle",
+							ImageSize:        "cover",
+						})).Do()
+					//bot.ReplyMessage(event.ReplyToken,linebot.).Do()
 
 				}
 
@@ -145,41 +151,25 @@ func Is_Name_Exist(name string) (product.Product, bool) {
 	return tmp, false
 }
 
-func Add_Carousel_Template() (c_t []*linebot.CarouselColumn) {
+func Camp_Search_Remain(t Search_Time) (c_t []*linebot.CarouselColumn) {
 
-	column1 := linebot.CarouselColumn{
-		ThumbnailImageURL:    "https://example.com/bot/images/item1.jpg",
-		ImageBackgroundColor: "#FFFFFF",
-		Title:                "A區",
-		Text:                 "5m*5m",
-		DefaultAction: &linebot.URIAction{
-			Label: "View detail",
-			URI:   "https://i.imgur.com/XXwY96T.jpeg",
-		},
-		Actions: []linebot.TemplateAction{
-			&linebot.PostbackAction{
-				Label: "訂位",
-				Data:  "action=order&itemid=1",
+	camp_searchs := SearchRemainCamp(t)
+	for _, s := range camp_searchs {
+		remain_num := fmt.Sprintf("剩餘 %d 帳", s.RemainMinAmount)
+		tmp := linebot.CarouselColumn{
+			ThumbnailImageURL:    s.Product.ImageUri[0],
+			ImageBackgroundColor: "#000000",
+			Title:                s.Product.CampRoundName,
+			Text:                 remain_num,
+			Actions: []linebot.TemplateAction{
+				&linebot.PostbackAction{
+					Label: "我要訂位",
+					Data:  fmt.Sprintf("action=order&item=%d", s.Product.ID),
+				},
 			},
-		},
+		}
+		c_t = append(c_t, &tmp)
 	}
-	column2 := linebot.CarouselColumn{
-		ThumbnailImageURL:    "https://i.imgur.com/3dthZKo.jpeg",
-		ImageBackgroundColor: "#000000",
-		Title:                "B區",
-		Text:                 "5m*5m",
-		DefaultAction: &linebot.URIAction{
-			Label: "View detail",
-			URI:   "http://example.com/page/222",
-		},
-		Actions: []linebot.TemplateAction{
-			&linebot.PostbackAction{
-				Label: "訂位",
-				Data:  "action=order&itemid=1",
-			},
-		},
-	}
-	c_t = append(c_t, &column1, &column2)
 
 	return c_t
 }
