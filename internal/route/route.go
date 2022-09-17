@@ -2,37 +2,38 @@ package route
 
 import (
 	"fmt"
-	v1 "linebot/api/v1"
-	"net/http"
-
+	"linebot/api/v1/line"
 	"linebot/internal/middleware"
+	"linebot/internal/richmenu"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() *gin.Engine {
-	//richmenu.Build_RichMenu()
+	richmenu.Build_RichMenu()
 
 	router := gin.Default()
-	router.Use(gin.BasicAuth(gin.Accounts{
-		"admin": "123456",
-	}))
+	// router.Use(gin.BasicAuth(gin.Accounts{
+	// 	"admin": "123456",
+	// }))
 	router.LoadHTMLGlob("web/templates/*.tmpl.html")
 	router.Static("/static", "static")
 
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
-	router.GET("/repeat", v1.RepeatHandler)
-	router.GET("/db/create", v1.CreateCampInfo)
-	router.GET("db/get", v1.GetCampInfo)
-	router.Any("/callback", v1.ReplyMessage)
+	router.GET("/repeat", line.RepeatHandler)
 
-	router.GET("/ce", middleware.MiddlewareTest(), func(c *gin.Context) {
-		req, _ := c.Get("request")
-		fmt.Println("request", req)
-		c.JSON(200, gin.H{"request": req})
+	router.Any("/callback", line.CampReply)
+
+	router.POST("/po", middleware.JwtMiddleware(), func(c *gin.Context) {
+		req, _ := c.Get("email")
+		fmt.Println("email", req)
+		c.JSON(200, gin.H{"email": req})
 	})
+	RegisterAccountRoutes(router)
+	RegisterOrderRoutes(router)
 	// lineroute := router.Group("/callback")
 	// lineroute.Any("/", v1.ReplyMessage)
 

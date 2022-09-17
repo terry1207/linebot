@@ -18,6 +18,9 @@ github.com/go-playground/universal-translator
 # github.com/go-playground/validator/v10 v10.11.0
 ## explicit; go 1.13
 github.com/go-playground/validator/v10
+# github.com/go-sql-driver/mysql v1.6.0
+## explicit; go 1.10
+github.com/go-sql-driver/mysql
 # github.com/golang/protobuf v1.5.2
 ## explicit; go 1.9
 github.com/golang/protobuf/proto
@@ -138,15 +141,16 @@ google.golang.org/protobuf/reflect/protoregistry
 google.golang.org/protobuf/runtime/protoiface
 google.golang.org/protobuf/runtime/protoimpl
 google.golang.org/protobuf/types/descriptorpb
-# gopkg.in/ini.v1 v1.66.6
-## explicit
 # gopkg.in/yaml.v2 v2.4.0
 ## explicit; go 1.15
 gopkg.in/yaml.v2
+# gorm.io/driver/mysql v1.3.6
+## explicit; go 1.14
+gorm.io/driver/mysql
 # gorm.io/driver/postgres v1.3.7
 ## explicit; go 1.14
 gorm.io/driver/postgres
-# gorm.io/gorm v1.23.7
+# gorm.io/gorm v1.23.8
 ## explicit; go 1.14
 gorm.io/gorm
 gorm.io/gorm/callbacks
